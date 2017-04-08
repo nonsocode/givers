@@ -11,3 +11,4 @@ givers.sublime-workspace
 givers.sublime-project
 .idea/
 /public/index.php
+composer.lock

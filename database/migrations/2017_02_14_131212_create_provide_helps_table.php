@@ -18,6 +18,7 @@ class CreateProvideHelpsTable extends Migration
             $table->uuid('user_id');
             $table->float('amount',10,2);
             $table->float('amount_paid',10,2)->default(0);
+            $table->float('current-worth',10,2)->default(0);
             $table->tinyInteger('status')->default(0);
             $table->softDeletes();
             $table->timestamps();

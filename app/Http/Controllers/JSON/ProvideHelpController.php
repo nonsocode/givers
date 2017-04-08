@@ -56,10 +56,11 @@ class ProvideHelpController extends Controller
 
         $this->validate($request,[
             'amount'=> 'numeric'
-            ]);
+        ]);
         if ($request->has('amount') ) {
             $ph = new ProvideHelp;
             $ph->amount = $request->amount;
+            $ph->current_worth = $request->amount;
             $user = \Auth::user();
             $user->phs()->save($ph);
             $ph->owner = $user;
