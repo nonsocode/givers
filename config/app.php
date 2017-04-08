@@ -168,7 +168,8 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+
+        env('APP_ENV',"production") == 'local' ? Barryvdh\Debugbar\ServiceProvider::class:'',
 
 
         /*
