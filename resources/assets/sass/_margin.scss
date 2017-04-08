@@ -1,0 +1,14 @@
+$i:10;
+@while $i < 100 {
+	.mb-#{$i} {
+		margin-bottom: #{$i}px;
+	}
+	.mt-#{$i} {
+		margin-top: #{$i}px;
+	}
+	.mtb-#{$i} {
+		margin-top: #{$i}px;
+		margin-bottom: #{$i}px;
+	}
+	$i: $i+10;
+}
