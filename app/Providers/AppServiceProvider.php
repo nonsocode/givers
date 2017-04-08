@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // \DB::listen(function($query){ echo "$query->sql\n\n";});
          Schema::defaultStringLength(191);
+
     }
 
     /**
@@ -26,5 +27,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        if (env('APP_ENV') == 'local') {
+            $this->app->register(Barryvdh\Debugbar\ServiceProvider::class);
+        }
     }
 }
