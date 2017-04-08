@@ -12,3 +12,4 @@ givers.sublime-project
 .idea/
 /public/index.php
 composer.lock
+/storage/framework/sessions/*

@@ -15,7 +15,7 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
     use UniqueId;
-    // use NodeTrait;
+    use NodeTrait;
     public $incrementing = false;
 
     /**
