@@ -30,6 +30,7 @@ class GetHelpPolicy
      */
     public function create(User $user)
     {
+        $errors = [];
         return !$user->outstandingPh()->count() && $user->phs()->count() && !$user->isBlocked();
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePairingsTable extends Migration
+class CreateBonusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreatePairingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pairings', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('provide_help_id');
-            $table->uuid('get_help_id');
-            $table->boolean('gher_confirm')->default(0);
+        Schema::create('bonuses', function (Blueprint $table) {
+            $table->increments('id');
+            $table->uuid('user_id');
             $table->decimal('amount',10,2);
-            $table->datetime('expiry');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreatePairingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pairings');
+        Schema::dropIfExists('bonuses');
     }
 }

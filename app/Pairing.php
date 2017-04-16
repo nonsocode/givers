@@ -12,6 +12,7 @@ class Pairing extends Model
     use SoftDeletes;
 
 	public $incrementing = false;
+	protected $fillable = ['ammount','expiry'];
     
 
 	public function gh()
@@ -21,5 +22,11 @@ class Pairing extends Model
 	public function ph()
 	{
 		return $this->belongsTo(ProvideHelp::class,'provide_help_id');
+	}
+	public function receiver(){
+		return $this->gh->owner;
+	}
+	public function giver(){
+		return $this->ph->owner;
 	}
 }

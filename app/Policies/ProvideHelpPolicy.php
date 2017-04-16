@@ -29,14 +29,21 @@ class ProvideHelpPolicy
      */
     public function create(User $user)
     {
-        $conds = [];
-        $conds[] =  $user->status == 1 ?true:false;
-        $conds[] = $user->phs()->where('provide_helps.status','<',3)->count() < \App\Config::find('ph_max')->value;
-        $answer = true;
-        foreach ($conds as $value) {
-            $answer &= $value;
-        }
-        return $answer;
+        $conds = $errors = [];
+        // $conds[] =  $user->status == 1 ?true:false;
+        // $conds[] = $user->phs()->where('provide_helps.status','<',3)->count() < \App\Config::find('ph_max')->value;
+        // $answer = true;
+        // foreach ($conds as $value) {
+        //     $answer &= $value;
+        // }
+        if(!$user->primaryPhone()->count()) $errors[] = 'You need to specify a phone number in your Profile page';
+        if(!$user->bankAccounts()->count()) $errors[] = 'You need to specify a bank account first';
+        if(!$user->status == 1)             $errors[] = 'Your account haas been deactivated';
+        $answer = [
+            'status' => !count($errors),
+            'messages' => $errors,
+        ];
+        return  $answer;
     }
 
     /**

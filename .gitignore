@@ -14,3 +14,4 @@ givers.sublime-project
 composer.lock
 /storage/framework/sessions/*
 /public/spinwallet.com/
+storage/framework/sessions/

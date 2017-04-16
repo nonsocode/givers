@@ -36,6 +36,11 @@
             @include('partials.adminlte.left-sidebar')
                 <!-- Content Wrapper. Contains page content -->
                 <div  class="content-wrapper">
+                    @if (isset($headerText))
+                        @component('comps.headertext')
+                            {{$headerText}}
+                        @endcomponent
+                    @endif
                     @yield('content')
                 </div>
                 <!-- /.content-wrapper -->

@@ -22,8 +22,9 @@ class CreateUsersTable extends Migration
             $table->integer('cred_score')->default(100);
             $table->boolean('activated')->default(false);
             $table->string('password');
-            $table->integer('login_count')->defualt('00');
+            $table->integer('login_count')->default(0);
             $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('formalities')->default(0);
             NestedSet::columns($table);
             $table->rememberToken();
             $table->softDeletes();

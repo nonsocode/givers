@@ -16,9 +16,9 @@ class CreateProvideHelpsTable extends Migration
         Schema::create('provide_helps', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('user_id');
-            $table->float('amount',10,2);
-            $table->float('amount_paid',10,2)->default(0);
-            $table->float('current-worth',10,2)->default(0);
+            $table->decimal('amount',10,2);
+            $table->decimal('amount_paid',10,2)->default(0);
+            $table->decimal('current-worth',10,2)->default(0);
             $table->tinyInteger('status')->default(0);
             $table->softDeletes();
             $table->timestamps();

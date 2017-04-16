@@ -16,8 +16,8 @@ class CreateGetHelpsTable extends Migration
         Schema::create('get_helps', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('user_id');
-            $table->float('amount', 10, 2);
-            $table->float('amount_gotten', 10, 2)->default(0);
+            $table->decimal('amount', 10, 2);
+            $table->decimal('amount_gotten', 10, 2)->default(0);
             $table->tinyInteger('status')->default(0);
             $table->softDeletes();
             $table->timestamps();

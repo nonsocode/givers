@@ -16,4 +16,9 @@ trait UniqueId{
         });
     }
 
+    protected function getDidAttribute(){
+        return explode('-',$this->id)[4];
+    }
+
+
 }

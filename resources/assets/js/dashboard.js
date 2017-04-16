@@ -58,7 +58,7 @@ canProvideHelp(){
     swal('Failed','Your Session has Expired','error');
 }
 else{
- swal('Failed',r.message,'error');
+ swal('success',r.messages[0],'error');
 }
 })
   .always(()=> {this.phButton.text = 'Provide Help';this.phButton.status = false;});

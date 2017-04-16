@@ -17,9 +17,11 @@
 	Route::get('/', 'PagesController@index');
 	Route::get('/home', 'PagesController@index')->middleware(['auth']);
 
-	Route::group(['prefix' => 'dashboard'], function() {
+	Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
 		Route::get('/', 'OfficeController@index');
 		Route::get('refferals', 'OfficeController@refferals');
+		Route::get('tickets', 'TicketsController@index');
+		Route::get('profile', "ProfileController@index")->name('profile');
 	});
 // });
 Route::group(['prefix'=>'json','middleware' =>['auth']],function(){

@@ -31,10 +31,12 @@ class ProvideHelpController extends Controller
      */
     public function create()
     {
-        if (!\Auth::user()->can('create', ProvideHelp::class)) {
+        $authorize = $this->check(\Auth::user());
+        if (!$authorize->status) {
             return response()->json([
                 'status'=>'fail',
                 'message' => 'You can not provide Help at this time',
+                'messages' => $authorize->messages,
             ]);
         }
         else{
@@ -56,7 +58,7 @@ class ProvideHelpController extends Controller
 
         $this->validate($request,[
             'amount'=> 'numeric'
-        ]);
+            ]);
         if ($request->has('amount') ) {
             $ph = new ProvideHelp;
             $ph->amount = $request->amount;
@@ -115,5 +117,18 @@ class ProvideHelpController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function check($user){
+        $errors = [];
+        $profile = route('profile');
+        if(!$user->primaryPhone()->count()) $errors[] = "You need to specify a phone number in your <a href='$profile'>Profile</a>  page";
+        if(!$user->bankAccounts()->count()) $errors[] = "You need to specify a bank account in your <a href='$profile'>Profile</a> page first";
+        if(!$user->status == 1)             $errors[] = 'Your account haas been deactivated';
+        $answer = [
+            'status' => !count($errors),
+            'messages' => $errors,
+        ];
+        return (object) $answer;
     }
 }

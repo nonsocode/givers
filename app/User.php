@@ -38,6 +38,10 @@ class User extends Authenticatable
 
     protected $allChildren = [];
 
+    ////////////////////////////
+    // Accessors and Mutators //
+    ////////////////////////////
+
     protected function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
@@ -60,6 +64,12 @@ class User extends Authenticatable
         },
         explode("-",$name)));
     }
+
+
+    ///////////////////////////
+    // Relationships         //
+    ///////////////////////////
+
     public function phPairings()
     {
         return $this->hasManyThrough(Pairing::class,ProvideHelp::class);
@@ -72,15 +82,38 @@ class User extends Authenticatable
     {
         return $this->hasMany(GetHelp::class);
     }
+
+    public function phs()
+    {
+        return $this->hasMany(ProvideHelp::class);
+    }
+    
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function phones(){
+        return $this->hasMany(Phone::class);
+    }
+
+    public function primaryPhone()
+    {
+        return $this->hasOne(Phone::class)->wherePrimary(true);
+    }
+
+    public function bankAccounts(){
+        return $this->hasMany(BankAccount::class);
+    }
+
+    ////////////////////////////
+    // Repositories and stuff //
+    ////////////////////////////
     public function outstandingGh(){
         return $this->ghs()->outstanding();
     }
     public function completeGh(){
         return $this->ghs()->complete();
-    }
-    public function phs()
-    {
-        return $this->hasMany(ProvideHelp::class);
     }
     public function outstandingPh(){
         return $this->phs()->outstanding();
@@ -88,31 +121,6 @@ class User extends Authenticatable
     public function completePh(){
         return $this->phs()->complete();
     }
-
-    // public function addRole($rolename)
-    // {
-    //     if ($this->hasRole($rolename)) {
-    //         return false;
-    //     }
-    //     else{
-    //         $this->roles()->attach(Role::whereName($rolename)->get());
-    //         return true;
-    //     }
-    // }
-
-    // public function roles()
-    // {
-    //     return $this->belongsToMany(Role::class);
-    // }
-
-    // public function hasRole($role)
-    // {
-    //     return $this->roles()->whereName($role)->orWhere('roles.id',$role)->count() ? true:false;
-    // }
-    // public function isSuperAdmin()
-    // {
-    //     return $this->roles()->whereName('superadmin')->count() ?true:false;
-    // }
 
     public function isBlocked()
     {

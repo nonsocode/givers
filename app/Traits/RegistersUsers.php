@@ -1,7 +1,9 @@
 <?php
 
-namespace Illuminate\Foundation\Auth;
+namespace App\Traits;
 
+
+use App\Phone;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,6 +44,7 @@ trait RegistersUsers
         {
             $this->validator($request->all())->validate();
             $user = $this->create($request->all());
+            $this->attachPhoneNumber($user, $request);
             event(new Registered($user,$this->activator));
 
         // $this->guard()->login($user);
@@ -50,6 +53,13 @@ trait RegistersUsers
             ?: redirect($this->redirectPath());
         }
 
+        protected function attachPhoneNumber($user, Request $request)
+        {
+            $phone = new Phone;
+            $phone->number = $request->phone;
+            $phone->primary= true;
+            $user->phones()->attach($phone);
+        }
     /**
      * The user has been registered.
      *

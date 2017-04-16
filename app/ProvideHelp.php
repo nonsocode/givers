@@ -39,7 +39,7 @@ class ProvideHelp extends Model
     {
     	return $query->where('status', '=', 4);
     }
-    static function allOutstanding(){
+    public static function allOutstanding(){
     	return static::where('status', '!=', 4)->get();
     }
 

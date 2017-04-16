@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Factories\UserActivation;
 use App\Http\Controllers\Controller;
 use App\Referral;
+use App\Traits\RegistersUsers;
 use App\User;
 use Illuminate\Database\Connection;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -64,7 +64,6 @@ class RegisterController extends Controller
             'email.unique' => "A user with this email already exists. You can login <a href='/login/?email={$data['email']}'>here</a>",
             'phone.min' =>'Phone number is too short',
             'referrer.different' => "You can\'t refer yourself",
-
             ]);
     }
 

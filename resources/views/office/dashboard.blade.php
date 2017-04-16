@@ -92,9 +92,6 @@
 	}
 	jQuery(document).ready(function($) {
 
-		$(document).ajaxError(function(event, xhr, settings, thrownError) {
-			console.log(xhr.responseText);
-		});
 		// $('#ph-form').submit(function(event) {
 		// 	event.preventDefault();
 		// 	swallow(this);
@@ -110,7 +107,11 @@
 					swal('Failed','Your Session has Expired','error');
 				}
 				else{
-					swal('Failed',r.message,'error');
+					swal({
+						'title' : "Failed",
+						'html'  : r.messages[0],
+						'type'	: 'error'
+					});
 				}
 			})
 			.always(function(){

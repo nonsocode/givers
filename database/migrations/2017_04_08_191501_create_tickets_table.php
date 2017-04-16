@@ -15,8 +15,11 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->integer('support_category_id');
             $table->uuid('user_id');
             $table->string('title');
+            $table->text('details');
+            $table->string('priority');
             $table->integer('status');
             $table->softDeletes();
             $table->timestamps();
