@@ -56,6 +56,8 @@
 			statusImage(){
 				return 4;
 			},
+
+
 			gher_name(){
 				return this.phItem.gh.owner.first_name+" "+ this.phItem.gh.owner.last_name;
 			},

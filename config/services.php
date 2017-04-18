@@ -34,5 +34,20 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    'nexmo' => [
+        'key' => env('NEXMO_KEY'),
+        'secret' => env('NEXMO_SECRET'),
+        'sms_from' => 'NEXMO',
+    ],
+    'twilio' => [
+        'account_sid' => env('TWILIO_ACCOUNT_SID'),
+        'auth_token' => env('TWILIO_AUTH_TOKEN'),
+        'from' => env('TWILIO_FROM'), // optional
+    ],
+    'plivo' => [
+        'auth_id' => env('PLIVO_AUTH_ID'),
+        'auth_token' => env('PLIVO_AUTH_TOKEN'),
+        'from_number' => env('PLIVO_FROM_NUMBER'),
+    ],
 
 ];

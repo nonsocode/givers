@@ -58,12 +58,16 @@ class RegisterController extends Controller
             'last_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
-            'phone' => 'required|min:11|numeric',
+            'phone' => 'required|min:11|numeric|unique:phones,number',
             'referrer' => 'email|nullable|different:email|exists:users,email',
+            'bank' => 'exists:banks,name',
+            'bank_account.name' => 'required',
+            'bank_account.number' => 'required|numeric',
             ],[
             'email.unique' => "A user with this email already exists. You can login <a href='/login/?email={$data['email']}'>here</a>",
             'phone.min' =>'Phone number is too short',
             'referrer.different' => "You can\'t refer yourself",
+            'bank_account.number' => "The Account number provided is not correct",
             ]);
     }
 

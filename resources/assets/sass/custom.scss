@@ -172,3 +172,29 @@ table.receipt-table{
   float: right;
 }
 
+.filter.nav-pills > li.active > a {
+    color: #fff !important;
+    background-color: #3097D1 !important;
+}
+#ticketsTable{
+	th{
+		text-align:center;
+	}
+}
+.label.label{
+	&-Open{
+		background-color: #63E31D!important;
+	}
+	&-In-Progress{
+		background-color: #FD971F!important;
+	}
+	&-Closed,&-dark{
+		background-color: #2A2B2A!important;
+	}
+}
+.clickable-row:hover{
+	cursor: pointer;
+}
+table.dataTable tfoot th, table.dataTable tfoot td{
+	 border-top: 1px solid #828282;
+}

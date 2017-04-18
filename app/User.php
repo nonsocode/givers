@@ -106,6 +106,10 @@ class User extends Authenticatable
         return $this->hasMany(BankAccount::class);
     }
 
+    public function bonuses(){
+        return $this->hasMany(Bonus::class);
+    }
+
     ////////////////////////////
     // Repositories and stuff //
     ////////////////////////////
@@ -122,9 +126,16 @@ class User extends Authenticatable
         return $this->phs()->complete();
     }
 
+    public function latestPhAmount(){
+        $ph = $this->phs()->latest()->first();
+        return $ph ? $ph->amount: 0;
+    }
+
     public function isBlocked()
     {
         return $this->status ? false: true;
     }
+
+
 
 }

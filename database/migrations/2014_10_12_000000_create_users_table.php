@@ -25,7 +25,9 @@ class CreateUsersTable extends Migration
             $table->integer('login_count')->default(0);
             $table->tinyInteger('status')->default(1);
             $table->tinyInteger('formalities')->default(0);
-            NestedSet::columns($table);
+            $table->unsignedInteger('_lft');
+            $table->unsignedInteger('_rgt');
+            $table->uuid('parent_id')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

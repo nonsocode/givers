@@ -18,9 +18,8 @@ class CreateTicketsTable extends Migration
             $table->integer('support_category_id');
             $table->uuid('user_id');
             $table->string('title');
-            $table->text('details');
-            $table->string('priority');
-            $table->integer('status');
+            $table->string('priority')->default('low');
+            $table->tinyInteger('status')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

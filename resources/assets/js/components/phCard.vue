@@ -5,7 +5,7 @@
 				<i class="fa fa-arrow-circle-right h-icon ph-icon"></i>
 				<span class="inline-block ph-title h-title">
 					<h4>Request to provide help</h4>
-					<div class="phid">PH Id:{{ph.id}}</div>
+					<div class="phid"><strong>Id:</strong> PH-{{did}}</div>
 				</span>
 			</div>
 		</div>
@@ -27,7 +27,11 @@
 		computed:{
 			fullname(){
 				return this.ph.owner.first_name+" "+this.ph.owner.last_name;
-			}
+			},
+			did(){
+				return this.ph.id.split('-')[4].toUpperCase();
+			},
+
 		}
 	}
 </script>

@@ -14990,6 +14990,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	computed: {
 		fullname: function fullname() {
 			return this.gh.owner.first_name + " " + this.gh.owner.last_name;
+		},
+		did: function did() {
+			return this.gh.id.split('-')[4].toUpperCase;
 		}
 	}
 };
@@ -15127,6 +15130,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	computed: {
 		fullname: function fullname() {
 			return this.ph.owner.first_name + " " + this.ph.owner.last_name;
+		},
+		did: function did() {
+			return this.ph.id.split('-')[4].toUpperCase();
 		}
 	}
 };
@@ -26187,7 +26193,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "inline-block gh-title h-title"
   }, [_c('h4', [_vm._v("Request to provide help")]), _vm._v(" "), _c('div', {
     staticClass: "ghid"
-  }, [_vm._v("GH Id:" + _vm._s(_vm.gh.id))])]), _vm._v(" "), _c('i', {
+  }, [_c('strong', [_vm._v("Id ")]), _vm._v(": GH-" + _vm._s(_vm.did))])]), _vm._v(" "), _c('i', {
     staticClass: "fa fa-arrow-circle-right gh-icon h-icon"
   })])]), _vm._v(" "), _c('div', {
     staticClass: "gh-body"
@@ -26224,7 +26230,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "inline-block ph-title h-title"
   }, [_c('h4', [_vm._v("Request to provide help")]), _vm._v(" "), _c('div', {
     staticClass: "phid"
-  }, [_vm._v("PH Id:" + _vm._s(_vm.ph.id))])])])]), _vm._v(" "), _c('div', {
+  }, [_c('strong', [_vm._v("Id:")]), _vm._v(" PH-" + _vm._s(_vm.did))])])])]), _vm._v(" "), _c('div', {
     staticClass: "ph-body"
   }, [_c('div', {
     staticClass: "fullname"

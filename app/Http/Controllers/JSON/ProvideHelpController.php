@@ -55,11 +55,16 @@ class ProvideHelpController extends Controller
      */
     public function store(Request $request)
     {
-
+        $user = \Auth::user();
         $this->validate($request,[
-            'amount'=> 'numeric'
-            ]);
-        if ($request->has('amount') ) {
+            'amount'=> 'required|numeric'
+        ]);
+        $amount = $request->amount;
+        $old_amount = $user->latestPhAmount();
+        if ($amount < $old_amount) {
+            return ['status' => 'failed', 'message'=> "You cannot provide help less than your previous amount. Please provide help of $old_amount or more"];
+        }
+        elseif ($request->has('amount') ) {
             $ph = new ProvideHelp;
             $ph->amount = $request->amount;
             $ph->current_worth = $request->amount;

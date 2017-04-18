@@ -3,8 +3,11 @@
 namespace App\Traits;
 
 
+use App\Bank;
+use App\BankAccount;
 use App\Phone;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -20,7 +23,7 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        return view('auth.register')->with('request', request());
+        return view('auth.register')->with(['request'=>request(),'banks'=>\App\Bank::all(),]);
     }
 
 
@@ -45,6 +48,7 @@ trait RegistersUsers
             $this->validator($request->all())->validate();
             $user = $this->create($request->all());
             $this->attachPhoneNumber($user, $request);
+            $this->attachBankAccount($user, $request);
             event(new Registered($user,$this->activator));
 
         // $this->guard()->login($user);
@@ -58,7 +62,7 @@ trait RegistersUsers
             $phone = new Phone;
             $phone->number = $request->phone;
             $phone->primary= true;
-            $user->phones()->attach($phone);
+            $user->phones()->save($phone);
         }
     /**
      * The user has been registered.
@@ -88,6 +92,16 @@ trait RegistersUsers
     {
         return view('auth.resend');
     }
+
+    public function attachBankAccount($user, $request)
+    {
+        $bank = Bank::whereName($request->bank)->first();
+        $account = new BankAccount($request->bank_account);
+        $account->user_id = $user->id;
+        $account->activated = true;
+        $user->bankAccounts()->save($bank->accounts()->save($account));
+    }
+
 
     public function resendToken(Request $req)
     {

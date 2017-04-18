@@ -7,7 +7,8 @@
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
-        <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+        {{-- <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}"> --}}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- Font Awesome -->
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -22,6 +23,8 @@
         {{-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.min.css"> --}}
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/sweetalert2/6.4.4/sweetalert2.min.css">
         <link rel="stylesheet" type="text/css" href="{{ mix('css/custom.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}"/>
+ 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -56,6 +59,8 @@
         <script src="{{ asset('js/jqueryui.js') }}"></script>
         <script src="{{ asset('js/remodal.js') }}"></script>
         <script src="{{ asset('js/rangeslider.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+ 
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
         $.widget.bridge('uibutton', $.ui.button);

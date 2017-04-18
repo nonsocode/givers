@@ -20,6 +20,7 @@ class CreateProvideHelpsTable extends Migration
             $table->decimal('amount_paid',10,2)->default(0);
             $table->decimal('current-worth',10,2)->default(0);
             $table->tinyInteger('status')->default(0);
+            $table->datetime('unfreezes')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

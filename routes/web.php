@@ -18,10 +18,13 @@
 	Route::get('/home', 'PagesController@index')->middleware(['auth']);
 
 	Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
-		Route::get('/', 'OfficeController@index');
+		Route::get('/', 'OfficeController@index')->name('dashboard');
 		Route::get('refferals', 'OfficeController@refferals');
 		Route::get('tickets', 'TicketsController@index');
+		Route::get('support-tickets', 'TicketsController@index')->name('tickets');
+		Route::get('support-tickets/{ticket}', 'TicketsController@show')->name('ticket.view');
 		Route::get('profile', "ProfileController@index")->name('profile');
+		Route::get('bonuses', "BonusController@index")->name('bonuses.index');
 	});
 // });
 Route::group(['prefix'=>'json','middleware' =>['auth']],function(){

@@ -82,6 +82,51 @@
                             </div>
                         </div>
 
+                        <hr>
+
+                        <div class="form-group{{ $errors->has('bank') ? ' has-error' : '' }}">
+                            <label for="password" class="col-md-4 control-label">Primary Bank*</label>
+                            <div class="col-md-6">
+                                <select  class="form-control" name="bank" id="password">
+                                    <option value="0">Select a bank</option>
+                                    @foreach ($banks as $bank)
+                                        <option value="{{$bank->name}}">{{$bank->name}}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('bank'))
+                                    <span class="help-block">
+                                        <strong>{{$errors->first('bank')}}</strong>
+                                    </span>
+                                @endif  
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('bank_account.number') ? ' has-error' : '' }}">
+                            <label for="bank_account_number" class="col-md-4 control-label">Bank Account Number</label>
+                            <div class="col-md-6">
+                                <input id="bank_account_number" name="bank_account[number]" type="text" minlength="10" maxlength="10" class="form-control" name="referrer" value="{{ old('bank_account.number')}}" >
+
+                                @if ($errors->has('bank_account.number'))
+                                    <span class="help-block">
+                                        <strong>{!! $errors->first('bank_account.number') !!}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('bank_account.name') ? ' has-error' : '' }}">
+                            <label for="bank_account_name" class="col-md-4 control-label">Bank Account Name</label>
+                            <div class="col-md-6">
+                                <input id="bank_account_name" name="bank_account[name]" type="text"  class="form-control" name="referrer" value="{{ old('bank_account.name')}}" >
+
+                                @if ($errors->has('bank_account.name'))
+                                    <span class="help-block">
+                                        <strong>{!! $errors->first('bank_account.name') !!}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('referrer') ? ' has-error' : '' }}">
                             <label for="referrer" class="col-md-4 control-label">Referrer's Email Address</label>
                             <div class="col-md-6">

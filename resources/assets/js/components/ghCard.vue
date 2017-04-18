@@ -4,7 +4,7 @@
 			<div class="h-header">
 				<span class="inline-block gh-title h-title">
 					<h4>Request to provide help</h4>
-					<div class="ghid">GH Id:{{gh.id}}</div>
+					<div class="ghid"><strong>Id </strong>: GH-{{did}}</div>
 				</span>
 				<i class="fa fa-arrow-circle-right gh-icon h-icon"></i>
 			</div>
@@ -27,7 +27,11 @@
 		computed:{
 			fullname(){
 				return this.gh.owner.first_name+" "+this.gh.owner.last_name;
-			}
+			},
+			did(){
+				return this.gh.id.split('-')[4].toUpperCase;
+			},
+
 		}
 	}
 </script>

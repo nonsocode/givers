@@ -8,6 +8,8 @@ class ProfileController extends Controller
 {
     public function index()
     {
-    	return view('office.profile')->with("headerText","Profile");
+    	$data['headerText'] = 'Profile';
+    	$data['user'] = \Auth::user()->load(['phones','bankAccounts.bank']);
+    	return view('office.profile',$data);
     }
 }

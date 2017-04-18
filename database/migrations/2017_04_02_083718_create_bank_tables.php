@@ -22,8 +22,10 @@ class CreateBankTables extends Migration
             $table->increments('id');
             $table->uuid('user_id');
             $table->uuid('bank_id');
-            $table->string('account_name');
-            $table->string('account_number',10)->unique();
+            $table->string('name');
+            $table->string('number',10)->unique();
+            $table->boolean('primary')->default(false);
+            $table->boolean('activated')->default(false);
             $table->timestamps();
         });
     }

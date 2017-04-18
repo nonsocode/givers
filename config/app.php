@@ -168,9 +168,9 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
-        // Barryvdh\Debugbar\ServiceProvider::class,
-
-
+        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+        NotificationChannels\Twilio\TwilioProvider::class,
+        NotificationChannels\Plivo\PlivoServiceProvider::class,
         /*
          * Application Service Providers...
          */
