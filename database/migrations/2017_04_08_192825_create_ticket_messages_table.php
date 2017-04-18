@@ -18,6 +18,7 @@ class CreateTicketMessagesTable extends Migration
             $table->uuid('user_id');
             $table->uuid('ticket_id');
             $table->text('message');
+            $table->tinyInteger('stars')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

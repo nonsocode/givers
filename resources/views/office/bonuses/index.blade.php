@@ -23,7 +23,7 @@
 						</tr>
 					@empty
 						<tr>
-							<td colspan="6" align="center">No Bonuses yet<td>
+							<td colspan="6" align="center"><h4>You have not been awarded any bonuses yet</h4><td>
 						</tr>
 					@endforelse
 					</tbody>

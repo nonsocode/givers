@@ -2,7 +2,7 @@
 <section class="content">
     <div class="row">
         <div class="col-md-3">
-            <a href="compose.html" class="btn btn-primary btn-block margin-bottom"><i  class="fa fa-plus"></i> Create New Ticket</a>
+            <a href="{{ route('tickets.create') }}" class="btn btn-primary btn-block margin-bottom"><i  class="fa fa-plus"></i> Create New Ticket</a>
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">Filter Tickets</h3>

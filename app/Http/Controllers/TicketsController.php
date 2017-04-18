@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TicketRequest;
+use App\SupportCategory;
 use App\Ticket;
+use App\TicketMessage;
 use Illuminate\Http\Request;
 
 class TicketsController extends Controller
@@ -21,16 +23,45 @@ class TicketsController extends Controller
     }
 
     public function create(){
-    	return view('office.tickets.create');
+        $categories = SupportCategory::all();
+    	return view('office.tickets.create',compact('categories'));
     }
 
     public function show(Ticket $ticket)
     {
+        $ticket->load(['documents']);
+        $data['tickets'] = $ticket->owner->tickets;
         $data['headerText'] = "Ticket ".$ticket->tid;
-        $data['ticket']=$ticket->load('messages.documents');
+        $data['ticket']=$ticket->load('messages.documents','messages.owner');
         return view('office.tickets.show', $data);
     }
-    public function store(TicketRequest $request){
-        
+
+    public function newTicketMessage(Ticket $ticket, Request $request)
+    {
+        $tm = new TicketMessage(['message'=> $request->message]);
+        $tm->user_id = \Auth::user()->id;
+        $ticket->messages()->save($tm);
+        $ticket->status == 0 ? $ticket->update(['status'=>1]):null;
+        return redirect()->back();
+    }
+
+    public function closeTicket(Ticket $ticket)
+    {
+        // dd ($ticket);
+        $ticket->status = 2;
+        $ticket->save();
+        return redirect()->back();
+    }
+
+    public function store(Request $req){
+        $ticket = new Ticket($req->only(['title','priority']));
+        $ticket->support_category_id = $req->cat_id;
+        \Auth::user()->tickets()->save($ticket);
+
+        $tm = new TicketMessage($req->only(['message']));
+        $tm->ticket_id = $ticket->id;
+        \Auth::user()->ticketMessages()->save($tm);
+        return redirect()->route('tickets');
+
     }
 }

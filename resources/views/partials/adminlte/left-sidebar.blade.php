@@ -17,7 +17,7 @@
                 </a>
             </li>
             <li>
-                <a href="bonuses">
+                <a href="{{ route('bonuses.index') }}">
                     <i class="fa fa-th"></i>
                     <span>Bonuses</span>
                 </a>

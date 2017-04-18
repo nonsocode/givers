@@ -93,6 +93,11 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class);
     }
 
+    public function ticketMessages()
+    {
+        return $this->hasMany(TicketMessage::class);
+    }
+
     public function phones(){
         return $this->hasMany(Phone::class);
     }

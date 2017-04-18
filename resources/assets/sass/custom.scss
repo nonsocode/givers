@@ -1,5 +1,6 @@
 @import "margin";
 @import "range";
+@import "messages";
 @mixin flex() {
 	display: -webkit-box;      
 	display: -moz-box;         
@@ -197,4 +198,62 @@ table.receipt-table{
 }
 table.dataTable tfoot th, table.dataTable tfoot td{
 	 border-top: 1px solid #828282;
+}
+.box{overflow: hidden;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.direct-chat-text{
+    border-radius: 5px;
+    position: relative;
+    padding: 5px 10px;
+    background: #ddd;
+    border: 1px solid #F0F0F0;
+    margin: 5px 0 0 50px;
+    color: #444444;
+    &.mine{
+    	background: #CADBFF;
+    }
+    &:before{
+		border-width: 6px;
+	    margin-top: -6px;
+    }
+    &:after{
+		border-width: 5px;
+	    margin-top: -5px;
+    }
+    &:after,&:before{
+	    position: absolute;
+	    right: 100%;
+	    top: 15px;
+	    border: solid transparent;
+	    border-right-color: #d2d6de;
+	    content: ' ';
+	    height: 0;
+	    width: 0;
+	    pointer-events: none;
+    }
+}
+.wide-button{
+	width:100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	background: none;
+}
+
+ul.alternate li:nth-child(even){
+	background: rgba(0,0,0,0.05);
 }

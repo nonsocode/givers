@@ -11,6 +11,7 @@ class TicketMessage extends Model
     use UniqueId;
     use SoftDeletes;
 
+    protected $fillable = ['message'];
     public $incrementing = false;
 
     public function ticket()
@@ -19,11 +20,31 @@ class TicketMessage extends Model
     }
     public function owner()
     {
-    	return $this->belongsTo(User::class);
+    	return $this->belongsTo(User::class,'user_id');
     }
 
     public function documents()
     {
         return $this->hasMany(TicketDocument::class);
+    }
+
+    //////////////////
+    // Repositories //
+    //////////////////
+
+    public function myMessage()
+    {
+        return \Auth::check() && $this->user_id == \Auth::user()->id;
+    }
+
+    ///////////////
+    // Mutators  //
+    ///////////////
+
+    public function setMessageAttribute($v)
+    {
+        $pd = new \Parsedown();
+        $pd->setMarkupEscaped(true);
+        $this->attributes['message'] = $pd->text($v);
     }
 }

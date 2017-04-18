@@ -21,6 +21,7 @@ class Ticket extends Model
     use SoftDeletes;
 
     public $incrementing = false;
+    protected $fillable =['title','priority','status'];
 
     ////////////////////////////
     // Mutators and Accessors //
@@ -61,11 +62,15 @@ class Ticket extends Model
 
     public function owner()
     {
-    	$this->belongsTo(User::class);
+    	return $this->belongsTo(User::class,'user_id');
     }
 
     public function category()
     {
         return $this->belongsTo(SupportCategory::class,'support_category_id');
+    }
+
+    public function documents(){
+        return $this->hasManyThrough(TicketDocument::class,TicketMessage::class);
     }
 }
