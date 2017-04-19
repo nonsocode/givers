@@ -36,7 +36,9 @@ class RefreshDatabase extends Command
      */
     public function handle()
     {
-        \DB::raw('DROP DATABASE '.env('DB_DATABASE'));
-        \DB::raw('CREATE DATABASE '.env('DB_DATABASE'));
+        foreach(\DB::select('SHOW TABLES') as $table) {
+            $table_array = get_object_vars($table);
+            \Schema::drop($table_array[key($table_array)]);
+        }
     }
 }

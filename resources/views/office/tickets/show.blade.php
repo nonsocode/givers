@@ -27,7 +27,9 @@
 								<strong>Last Update:</strong><br>
 								{{
 									$ticket->messages->sortByDesc('created_at')->first()?
+									$ticket->messages->sortByDesc('created_at')->first()->updated_at->gt($ticket->updated_at)?
 									$ticket->messages->sortByDesc('created_at')->first()->updated_at->diffForHumans():
+									$ticket->updated_at->diffForHumans():
 									$ticket->updated_at->diffForHumans()
 								}}
 							</li>

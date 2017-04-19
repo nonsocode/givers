@@ -14,7 +14,7 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="" class="">Subject</label>
-									<input type="text" name="title" placeholder="Brief summary of the problem" class="form-control">
+									<input maxlength="190" minlength="15" type="text" name="title" placeholder="Brief summary of the problem" class="form-control">
 								</div>
 							</div>
 
