@@ -39,7 +39,7 @@
 							<form action="{{ route('ticket.close',[$ticket->id]) }}" method="POST">
 								{{csrf_field()}}
 								{{method_field("PATCH")}}
-								<button type="submit" class="btn btn-danger" {{$ticket->status === 2 ? "disabled":''}}>Close Ticket</button>
+								<button type="submit" class="btn btn-danger" {{$ticket->status == 2 ? "disabled":''}}>Close Ticket</button>
 							</form>
 							</li>
 					</ul>
