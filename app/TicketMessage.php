@@ -44,7 +44,7 @@ class TicketMessage extends Model
     public function setMessageAttribute($v)
     {
         $pd = new \Parsedown();
-        $pd->setMarkupEscaped(true);
+        $pd->setMarkupEscaped(true)->setBreaksEnabled(true);
         $this->attributes['message'] = $pd->text($v);
     }
 }

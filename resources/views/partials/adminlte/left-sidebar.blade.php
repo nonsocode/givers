@@ -24,12 +24,6 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="fa fa-pie-chart"></i>
-                    <span>Charts</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
                     <i class="fa fa-laptop"></i>
                     <span>Transactions</span>
                     <span class="pull-right-container">

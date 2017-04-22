@@ -19,12 +19,13 @@ class TicketsController extends Controller
     {
         $data['headerText']= 'Support Tickets';
         $data['tickets'] = \Auth::user()->load(['tickets.category'])->tickets;
-        return view('office.tickets.index2',$data);
+        return view(config('view.dashboard').'office.tickets.index',$data);
+        // return view('office.tickets.index2',$data);
     }
 
     public function create(){
         $categories = SupportCategory::all();
-    	return view('office.tickets.create',compact('categories'));
+    	return view(config('view.dashboard').'office.tickets.create',compact('categories'));
     }
 
     public function show(Ticket $ticket)
@@ -33,7 +34,7 @@ class TicketsController extends Controller
         $data['tickets'] = $ticket->owner->tickets;
         $data['headerText'] = "Ticket ".$ticket->tid;
         $data['ticket']=$ticket->load('messages.documents','messages.owner');
-        return view('office.tickets.show', $data);
+        return view(config('view.dashboard').'office.tickets.show', $data);
     }
 
     public function newTicketMessage(Ticket $ticket, Request $request)

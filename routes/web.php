@@ -21,6 +21,12 @@ Route::post('user/activation/resend', 'Auth\RegisterController@resendToken')->na
 Route::get('/', 'PagesController@index');
 Route::get('/home', 'PagesController@index')->middleware(['auth']);
 
+Route::group(['prefix' => config('dashboard.name')], function() {
+    Route::get('/', function(){ return view(config('view.dashboard').'office.dashboard');})->name(config('routes.prefix').'dashboard');
+    Route::get('/tickets', 'TicketsController@index')->name(config('routes.prefix').'tickets.index');
+	Route::get('/tickets/create', 'TicketsController@create')->name(config('routes.prefix').'tickets.create');
+
+});
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
 	Route::get('/', 'OfficeController@index')->name('dashboard');
 	Route::get('refferals', 'OfficeController@refferals');
