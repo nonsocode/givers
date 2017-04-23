@@ -46,20 +46,31 @@
                     </li>
                     <!-- BEGIN USER LOGIN DROPDOWN -->
                     <li class="dropdown-user ">
-                        <a href="javascript:;" style="overflow: hidden;padding: 12px 7px 7px;" class="dropdown-toggle" >
-                            <img alt="" class="img-circle" src="{{ asset('assets/layouts/layout3/img/avatar9.jpg') }}">
-                            <span class="username username-hide-mobile">Nick</span>
+                        <a href="{{ route(config('routes.prefix').'profile.index') }}" style="overflow: hidden;padding: 12px 7px 7px;" class="dropdown-toggle" >
+                            <img alt="" class="img-circle" src="{{ asset('img/avatar.png') }}">
+                            <span class="username username-hide-mobile">{{\Auth::user()->first_name." ".\Auth::user()->last_name[0]."."}}</span>
                         </a>
                     </li>
                     <!-- END USER LOGIN DROPDOWN -->
                     <!-- BEGIN QUICK SIDEBAR TOGGLER -->
                     <li>
-                        <a href="#">
-                            <i class="icon-logout"></i> <span>Logout</span>
-                        </a>
+                            <a href="#" id="logout-button">
+                                <i class="icon-logout"></i> <span>Logout</span>
+                            </a>
+                        <form class="hidden" id="logout-form" method="post" action="{{ route('logout') }}">{{csrf_field()}}
+                        </form>
                     </li>
                 </ul>
             </div>
             <!-- END TOP NAVIGATION MENU -->
         </div>
     </div>
+
+    @push('scripts')
+        <script type="text/javascript">
+            $('#logout-button').click(function (e) {
+                e.preventDefault();
+                $('#logout-form').submit();
+            })
+        </script>
+    @endpush

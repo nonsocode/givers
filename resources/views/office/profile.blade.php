@@ -34,7 +34,6 @@
 								<input type="text" readonly="" class="form-control" value="{{$user->created_at->toFormattedDateString()}}">
 							</div>
 						</div>
-
 					</div>
 				</form>
 			</div>

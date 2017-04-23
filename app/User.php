@@ -65,6 +65,21 @@ class User extends Authenticatable
         explode("-",$name)));
     }
 
+    protected function getStatusTextAttribute(){
+        switch ($this->attributes['status']) {
+            case 0:
+                return 'innactive';
+                break;
+            case 1:
+                return 'active';
+                break;
+            
+            default:
+                return null;
+                break;
+        }
+    }
+
 
     ///////////////////////////
     // Relationships         //

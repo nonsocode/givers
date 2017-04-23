@@ -9,7 +9,7 @@
 					<div class="box-body">
 						<p>In order to streamline support requests and better serve you, we utilize a support ticket system. Every support request is assigned a unique ticket number which you can use to track the progress and responses online. For your reference we provide complete archives and history of all your support requests.</p>
 						<hr>
-						<form action="{{ route('tickets.store') }}" method="POST" role="form">
+						<form action="{{ route('tickets.store') }}" enctype="multipart/form-data" method="POST" role="form">
 							{{csrf_field()}}
 							<div class="col-md-4">
 								<div class="form-group">
@@ -53,8 +53,18 @@
 	                                </span>
 	                            @endif
 	                        </div>
-						
-							<button type="submit" class="btn btn-primary">Submit</button>
+	                        <div class="row">
+		                        <div class="col-md-12">
+			                        <div id="file-container" class="col-md-6">
+			                        <div class="col-md-6">
+			                        	<button id="addFile" class="btn btn-primary"><i class="fa fa-plus"></i> Add File</button> <span class="help-block">Only pictures (png,jpg) are allowed. Max size 500KB</span>
+			                        </div>
+		                        </div>
+	                        </div>
+	                        <div class="col-md-12">
+								<button type="submit" class="btn btn-primary">Submit</button>
+	                        </div>
+	                        <div class="clearfix"></div>
 						</form>
 					</div>
 				</div>
@@ -64,6 +74,15 @@
 	</section>
 @stop
 
-@section('mainScript')
+@section('page-script')
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script type="text/javascript">
+    	$('#addFile').click(function(event) {
+    		event.preventDefault();
+    		if ($("input[name='pics[]']").length < 5) {
+	    		var $input = $('<input type="file" name="pics[]">').addClass('form-control');
+	    		$('#file-container').append($('<div>').addClass('form-group').append($input));
+    		}
+    	});
+    </script>
 @stop

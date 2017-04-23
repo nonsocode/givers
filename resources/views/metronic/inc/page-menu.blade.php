@@ -16,7 +16,12 @@
                     </a>
                 </li>
                 <li class="">
-                    <a href="javascript:;"> Refferals
+                    <a href="{{ route(config('routes.prefix').'bonuses.index') }}"> Bonuses
+                        <span class="arrow"></span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="{{ route(config('routes.prefix').'referrals.index') }}"> Refferals
                         <span class="arrow"></span>
                     </a>
                 </li>

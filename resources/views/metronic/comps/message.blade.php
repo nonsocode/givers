@@ -18,10 +18,16 @@
 		<div class="message-content">
 			{{$slot}}
 		</div>
-		<div class="message-attachments">
-			<h5>Attachments</h5>
-
-		</div>
+		@if ($message->documents->count())
+			<div class="message-attachments">
+				<div class="message-attachments">
+					<h5>Attachments</h5>
+					@foreach ($message->documents as $document)
+						<a href="{{asset("storage/".$document->url)}}" class="attachment">Picture {{$loop->iteration}}</a>
+					@endforeach
+				</div>
+			</div>
+		@endif
 	</div>
 </div>
 </div>

@@ -12,6 +12,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="" name="description" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta content="" name="author" />
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link rel="stylesheet" type="text/css" href="">
@@ -35,11 +36,11 @@
         <link href="{{ asset('assets/layouts/layout3/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/layouts/layout3/css/themes/default.min.css') }}" rel="stylesheet" type="text/css" id="style_color" />
         <link href="{{ asset('assets/layouts/layout3/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="{{mix('css/custom.css')}}">
         @yield('css')
        <style type="text/css">
             @stack('css')
        </style>
+        <link rel="stylesheet" type="text/css" href="{{mix('css/custom.css')}}">
 
         <!-- END THEME LAYOUT STYLES -->
         <link rel="shortcut icon" href="favicon.ico" /> </head>
@@ -77,7 +78,7 @@
         <!-- END CONTAINER -->
         <!-- BEGIN FOOTER -->
         <!-- BEGIN PRE-FOOTER -->
-        <div class="page-prefooter">
+        {{-- <div class="page-prefooter">
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 col-sm-6 col-xs-12 footer-block">
@@ -132,13 +133,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- END PRE-FOOTER -->
         <!-- BEGIN INNER FOOTER -->
         <div class="page-footer">
-            <div class="container"> 2014 &copy; Metronic by keenthemes.
-                <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
-            </div>
+            <div class="container"> 2017 &copy; IndexBaseHub. Powered by Webtronet Solutions </div>
         </div>
         <div class="scroll-to-top">
             <i class="icon-arrow-up"></i>
@@ -189,6 +188,14 @@
         <script src="{{ asset('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js') }}" type="text/javascript"></script>
+        <script type="text/javascript">
+            $.ajaxSetup({
+                headers:{
+                    'X-CSRF-TOKEN' : '{{csrf_token()}}',
+                },
+            });
+        </script>
+
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
         <script src="{{ asset('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>

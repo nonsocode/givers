@@ -11,25 +11,33 @@
 |
 */
 
-// Route::group(['domain' => 'givers.app'], function() {
+Route::get('/', 'PagesController@index');
 Auth::routes();
 Route::get('user/activation/{token}', 'Auth\RegisterController@activateUser')->name('user.activate');
 Route::get('user/activation/resend/token', 'Auth\RegisterController@resendForm')->name('user.activate.resend');
 Route::post('user/activation/resend', 'Auth\RegisterController@resendToken')->name('resendToken');
 
 
-Route::get('/', 'PagesController@index');
-Route::get('/home', 'PagesController@index')->middleware(['auth']);
 
 Route::group(['prefix' => config('dashboard.name')], function() {
+
     Route::get('/', function(){ return view(config('view.dashboard').'office.dashboard');})->name(config('routes.prefix').'dashboard');
+
     Route::get('/tickets', 'TicketsController@index')->name(config('routes.prefix').'tickets.index');
 	Route::get('/tickets/create', 'TicketsController@create')->name(config('routes.prefix').'tickets.create');
+	Route::post('/tickets/store', 'TicketsController@store')->name(config('routes.prefix').'tickets.store');
+	Route::get('/ticket/{ticket}', 'TicketsController@show')->name(config('routes.prefix').'ticket.view');
+
+	Route::get('/referrals', 'ReferralsController@index')->name(config('routes.prefix').'referrals.index');
+
+	Route::get('/profile', "ProfileController@index")->name(config('routes.prefix').'profile.index');
+	Route::patch('/profile/password', "ProfileController@password")->name(config('routes.prefix').'profile.password');
+
+	Route::get('/bonuses', "BonusController@index")->name(config('routes.prefix').'bonuses.index');
 
 });
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
 	Route::get('/', 'OfficeController@index')->name('dashboard');
-	Route::get('refferals', 'OfficeController@refferals');
 
 	Route::get('tickets', function (){return view('office.tickets.index');});
 	Route::get('support-tickets', 'TicketsController@index')->name('tickets');
@@ -42,7 +50,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
 	Route::get('profile', "ProfileController@index")->name('profile');
 	Route::get('bonuses', "BonusController@index")->name('bonuses.index');
 });
-// });
+
+
 Route::group(['prefix'=>'json','middleware' =>['auth']],function(){
 	Route::resource('phs','JSON\ProvideHelpController');
 	Route::resource('ghs','JSON\GetHelpController');

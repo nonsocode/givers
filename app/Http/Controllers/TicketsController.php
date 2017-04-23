@@ -39,10 +39,17 @@ class TicketsController extends Controller
 
     public function newTicketMessage(Ticket $ticket, Request $request)
     {
+        // dd($request->hasFile('pics'));
         $tm = new TicketMessage(['message'=> $request->message]);
         $tm->user_id = \Auth::user()->id;
         $ticket->messages()->save($tm);
         $ticket->status == 0 ? $ticket->update(['status'=>1]):null;
+        if ($request->hasFile('pics')) {
+            foreach ($request->pics as $pic) {
+                $urls[]['url'] = $pic->store('ticket-documents', 'public');
+            }
+            $tm->documents()->createMany($urls);
+        }
         return redirect()->back();
     }
 
@@ -62,7 +69,14 @@ class TicketsController extends Controller
         $tm = new TicketMessage($req->only(['message']));
         $tm->ticket_id = $ticket->id;
         \Auth::user()->ticketMessages()->save($tm);
-        return redirect()->route('tickets');
+        if ($req->hasFile('pics')) {
+            foreach ($req->pics as $pic) {
+                $urls[]['url'] = $pic->store('ticket-documents', 'public');
+            }
+            $tm->documents()->createMany($urls);
+        }
+        
+        return redirect()->route(config('routes.prefix').'ticket.view',[$ticket->id]);
 
     }
 }

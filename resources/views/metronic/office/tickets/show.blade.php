@@ -36,6 +36,10 @@
 								<strong>Priority</strong> :  
 								{{$ticket->priority}}
 							</li>
+							<li class="list-group-item">
+								<strong>No. of Documents</strong> :  
+								{{$ticket->documents->count()}}
+							</li>
 							<li class="list-group-item text-center">
 							<form action="{{ route('ticket.close',[$ticket->id]) }}" method="POST">
 								{{csrf_field()}}
@@ -82,4 +86,17 @@
 		</div>
 	</div>	
 </div>
+@stop
+
+@section('page-script')
+    <script type="text/javascript">
+    	$('#addFile').click(function(event) {
+    		event.preventDefault();
+    		if ($("input[name='pics[]']").length < 5) {
+	    		var $input = $('<input type="file" name="pics[]">').addClass('form-control');
+	    		$('#file-container').append($('<div>').addClass('form-group').append($input));
+    		}
+    	});
+    </script>
+
 @stop

@@ -269,3 +269,20 @@ table.spacious tr{
 .portlet{
 	border-radius:3px !important;
 }
+a.attachment {
+    display: inline-block;
+    background: #f3ebe0;
+    border: 1px solid #ede0ce;
+    border-radius: 2px !important;
+    padding: 5px;
+    font-size: 0.9em;
+    margin-right: 5px;
+    color: goldenrod;
+    border-collapse: separate;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+	padding:0 !important;
+}
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 12px 10px;
+}
