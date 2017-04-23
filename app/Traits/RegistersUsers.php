@@ -5,9 +5,9 @@ namespace App\Traits;
 
 use App\Bank;
 use App\BankAccount;
+use App\Events\Registered;
 use App\Phone;
 use App\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
