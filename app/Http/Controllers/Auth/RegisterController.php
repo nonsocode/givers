@@ -62,7 +62,7 @@ class RegisterController extends Controller
             'referrer' => 'email|nullable|different:email|exists:users,email',
             'bank' => 'exists:banks,name',
             'bank_account.name' => 'required',
-            'bank_account.number' => 'required|numeric',
+            'bank_account.number' => 'required|numeric|unique:bank_accounts,number',
             ],[
             'email.unique' => "A user with this email already exists. You can login <a href='/login/?email={$data['email']}'>here</a>",
             'phone.min' =>'Phone number is too short',

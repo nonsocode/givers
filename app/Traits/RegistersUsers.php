@@ -50,7 +50,8 @@ trait RegistersUsers
             $user = $this->create($request->all());
             $this->attachPhoneNumber($user, $request);
             $this->attachBankAccount($user, $request);
-            event(new Registered($user,$this->activator));
+            // event(new Registered($user,$this->activator));
+            $this->activator->sendActivationMail($user);
 
         // $this->guard()->login($user);
 

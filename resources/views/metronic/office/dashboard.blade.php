@@ -47,7 +47,7 @@
                         <i class="widget-thumb-icon bg-purple icon-screen-desktop"></i>
                         <div class="widget-thumb-body">
                             <span class="widget-thumb-subtitle">PERCENT</span>
-                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="100">0</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="{{\Auth::user()->cred_score}}">0</span>
                         </div>
                     </div>
                 </div>
