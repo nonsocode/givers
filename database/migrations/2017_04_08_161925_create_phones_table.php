@@ -15,7 +15,7 @@ class CreatePhonesTable extends Migration
     {
         Schema::create('phones', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('user_id');
+            $table->bigInteger('user_id');
             $table->string('number')->unique();
             $table->boolean('primary')->default(false);
             $table->softDeletes();

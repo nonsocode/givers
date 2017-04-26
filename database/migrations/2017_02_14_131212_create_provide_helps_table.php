@@ -14,16 +14,18 @@ class CreateProvideHelpsTable extends Migration
     public function up()
     {
         Schema::create('provide_helps', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('user_id');
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id');
             $table->decimal('amount',10,2);
             $table->decimal('amount_paid',10,2)->default(0);
             $table->decimal('current_worth',10,2)->default(0);
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(1);
             $table->datetime('unfreezes')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
+        DB::update("ALTER TABLE provide_helps AUTO_INCREMENT = 1000;");
+
     }
 
     /**

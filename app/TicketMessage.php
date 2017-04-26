@@ -2,21 +2,23 @@
 
 namespace App;
 
+use App\Traits\LongID;
 use App\Traits\UniqueId;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TicketMessage extends Model
 {
-    use UniqueId;
+    use LongID;
     use SoftDeletes;
 
     protected $fillable = ['message'];
-    public $incrementing = false;
+    protected $idPrefix = 'TKM';
+    
 
     public function ticket()
     {
-    	return $this->belongsTo(Ticket::class);
+    	return $this->belongsTo(Ticket::class,'ticket_id');
     }
     public function owner()
     {

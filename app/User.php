@@ -4,6 +4,7 @@ namespace App;
 
 use App\GH;
 use App\Role;
+use App\Traits\LongID;
 use App\Traits\UniqueId;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,9 +15,9 @@ class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
-    use UniqueId;
+    use LongID;
     use NodeTrait;
-    public $incrementing = false;
+    
 
     /**
      * The attributes that are mass assignable.
@@ -24,8 +25,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-         'email', 'password','first_name', 'last_name',
+         'email', 'password','first_name', 'last_name'
     ];
+    protected $idPrefix = 'USR';
 
     /**
      * The attributes that should be hidden for arrays.

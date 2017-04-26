@@ -2,16 +2,23 @@
 
 namespace App;
 
+use App\MoneyModel;
+use App\Traits\LongID;
 use App\Traits\UniqueId;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Pairing extends Model
+// Statuses
+// 
+class Pairing extends MoneyModel
 {
-    use UniqueId;
+    use LongID;
     use SoftDeletes;
 
-	public $incrementing = false;
+    protected $idPrefix = 'TRN';
+    protected $money = ['amount'];
+
+	
 	protected $fillable = ['ammount','expiry'];
     
 

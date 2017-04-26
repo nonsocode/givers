@@ -22,7 +22,7 @@ class PhoneSeeder extends Seeder
         	'primary'	=> true,
     	]);
         Phone::create([
-        	'number'	=>	'33234432334',
+        	'number'	=> '07048938283',
         	'user_id'	=>	$u2,
         	'primary'	=>  true,
     	]);

@@ -19,7 +19,7 @@ class CreateBonusesTable extends Migration
         });
         Schema::create('bonuses', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('user_id');
+            $table->bigInteger('user_id');
             $table->integer('bonus_type_id')->nullable();
             $table->decimal('amount',10,2);
             $table->decimal('claimed',10,2)->default(0);

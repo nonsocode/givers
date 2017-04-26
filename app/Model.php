@@ -13,20 +13,6 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
 class Model extends EloquentModel
 {
 	
-	function __construct(array $attributes = [])
-	{
-		parent::__construct($attributes);
-
-		if (property_exists($this, 'money')) {
-			foreach ($this->money as $money) {
-				$this->makeMoneyAttribute($money);
-			}
-		} else {
-			# code...
-		}
-		
-	}
-
 	public function makeMoneyAttribute($money)
 	{
 		if (isset($this->attributes[$money])) {
@@ -43,14 +29,11 @@ class Model extends EloquentModel
 	public function __get($prop)
 	{
 		if (property_exists($this, 'money') && in_array($prop, $this->money)) {
-			if (isset($this->attributes[$prop])) {
+			$money = parent::__get($prop);
 				if (!(is_object($this->attributes[$prop]) && get_class($this->attributes[$prop]) == Money::class) && !empty($this->attributes[$prop])) {
 					return $this->attributes[$prop] = new Money($this->attributes[$prop]);
 				}
-				else{
-					return $this->attributes[$prop];
-				}
-			} else {
+				 else {
 					return $this->attributes[$prop] = new Money() ;
 			}
 		}

@@ -20,8 +20,8 @@ class CreateBankTables extends Migration
         });
         Schema::create('bank_accounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('user_id');
-            $table->uuid('bank_id');
+            $table->bigInteger('user_id');
+            $table->bigInteger('bank_id');
             $table->string('name');
             $table->string('number',10)->unique();
             $table->boolean('primary')->default(false);
