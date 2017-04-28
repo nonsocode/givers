@@ -51,6 +51,9 @@
                             <span class="username username-hide-mobile">{{\Auth::user()->first_name." ".\Auth::user()->last_name[0]."."}}</span>
                         </a>
                     </li>
+                    <li class="dropdown dropdown-separator">
+                        <span class="separator"></span>
+                    </li>
                     <!-- END USER LOGIN DROPDOWN -->
                     <!-- BEGIN QUICK SIDEBAR TOGGLER -->
                     <li>

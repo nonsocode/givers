@@ -10,25 +10,29 @@
 					<div class="caption-subject bold">Bonuses</div>
 				</div>
 			</div>
-				<table id="bonuses-table" class="table">
-					<thead>
-						<tr>
-							<th>Type</th>
-							<th>Status</th>
-							<th>Amount</th>
-							<th>Date Created</th>
-							<th>Release Date</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-					@foreach($bonuses as $bonus)
-						<tr>
-							<td></td>
-						</tr>
-					@endforeach
-					</tbody>
-				</table>
+			<div class="portlet-body">
+				<div class="table-container" style="overflow-x:scroll;width:100%">
+					<table id="bonuses-table" class="table">
+						<thead>
+							<tr>
+								<th>Type</th>
+								<th>Status</th>
+								<th>Amount</th>
+								<th>Date Created</th>
+								<th>Release Date</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+						@foreach($bonuses as $bonus)
+							<tr>
+								<td></td>
+							</tr>
+						@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
 			</div>
 		</div>
 	</div>

@@ -4,6 +4,7 @@ namespace App;
 
 use App\GH;
 use App\Role;
+use App\Traits\EntrustUserTrait;
 use App\Traits\LongID;
 use App\Traits\UniqueId;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,6 +18,9 @@ class User extends Authenticatable
     use SoftDeletes;
     use LongID;
     use NodeTrait;
+    use EntrustUserTrait {
+        EntrustUserTrait::restore insteadof SoftDeletes;
+    }
     
 
     /**
@@ -54,6 +58,9 @@ class User extends Authenticatable
             return ucfirst(strtolower($i));
         },
         explode("-",$name)));
+    }
+    protected function getShortNameAttribute($prop){
+        return $this->first_name." ".ucfirst($this->last_name[0]).".";
     }
     protected function getNameAttribute()
     {
@@ -119,13 +126,17 @@ class User extends Authenticatable
         return $this->hasMany(Phone::class);
     }
 
-    public function primaryPhone()
+    public function phone()
     {
         return $this->hasOne(Phone::class)->wherePrimary(true);
     }
 
     public function bankAccounts(){
         return $this->hasMany(BankAccount::class);
+    }
+
+    public function bankAccount(){
+        return $this->hasOne(BankAccount::class)->wherePrimary(true);;
     }
 
     public function bonuses(){

@@ -14,28 +14,30 @@
 						<div class="actions"><button class="btn btn-primary">Show referral link</button></div>
 					</div>
 					<div class="portlet-body">
-						<table id="referrals-table" class="table table-hover">
-							<thead>
-								<th>ID</th>
-								<th>Full Name</th>
-								<th>Email</th>
-								<th>Phone Number</th>
-								<th>Status</th>
-								<th>Joined on</th>
-							</thead>
-							<tbody>
-							@foreach ($children as $child)
-								<tr>
-									<td>{{$child->did}}</td>
-									<td>{{$child->name}}</td>
-									<td>{{$child->email}}</td>
-									<td>{{$child->primaryPhone->number}}</td>
-									<td>{{$child->statusText}}</td>
-									<td>{{$child->created_at->toFormattedDateString()}}</td>
-								</tr>
-							@endforeach
-							</tbody>
-						</table>
+						<div class="table-container" style="overflow-x: scroll;width: 100%;">
+							<table id="referrals-table" class="table table-hover">
+								<thead>
+									<th>ID</th>
+									<th>Full Name</th>
+									<th>Email</th>
+									<th>Phone Number</th>
+									<th>Status</th>
+									<th>Joined on</th>
+								</thead>
+								<tbody>
+								@foreach ($children as $child)
+									<tr>
+										<td>{{$child->did}}</td>
+										<td>{{$child->name}}</td>
+										<td>{{$child->email}}</td>
+										<td>{{$child->primaryPhone->number}}</td>
+										<td>{{$child->statusText}}</td>
+										<td>{{$child->created_at->toFormattedDateString()}}</td>
+									</tr>
+								@endforeach
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>

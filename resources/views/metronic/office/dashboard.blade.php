@@ -78,7 +78,7 @@ Dashboard
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="mt-widget-3 help-button" data-url="{{route('get-help.create')}}">
+                <div class="mt-widget-3 help-button golden-rod" data-url="{{route('get-help.create')}}">
                     <div class="mt-head bg-green">
                         <div class="mt-head-icon">
                             <i class="fa fa-bank"></i>
@@ -97,34 +97,9 @@ Dashboard
                         </div>
                     </div>
                     <div class="portlet-body">
-                    @foreach ($transactions as $trans)
-                        <div class="transaction">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <span class="trn-id">{{ $trans->did }}</span>
-                                    <span class="long-status">You are to make a payment for the GH request with Reference No. </span>
-                                    <span class="gh-id">{{$trans->gh->did}}</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-10">
-                                    <div class="col-sm-4 text-center"><h4><small>From</small><br>{{Auth::user()->name}}</h4></div>
-                                    <div class="col-sm-4  text-center">
-                                        <h4><small>Amount</small><br>
-                                        {{$trans->prettyAmount}}
-                                        </h4>
-                                    </div>
-                                    <div class="col-sm-4  text-center"><h4><small>To</small><br>{{$trans->gh->owner->name}}</h4>
-                                        <span>Diamond Bank</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 text-center">
-                                    <h4><small>Created</small><br><time title="{{$trans->created_at}}" data-toggle='tooltip'>{{$trans->created_at->diffForHumans()}}</time></h4>
-                                </div>
-                            </div>
-                            <div class="row"></div>
-                        </div>
-                    @endforeach
+                        @foreach ($transactions as $trans)
+                                @include(config('view.dashboard').'inc.pairing')
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -138,22 +113,7 @@ Dashboard
                     <div class="portlet-body">
                         <div class="helps-container">
                             @foreach ($helps as $help)
-                            <div class="help-box">
-                                <h5 class="help-title">Request to provide help {{$help->did}}</h5>
-                                <div class="help-details">
-                                    Participant : {{$user->name}}<br>
-                                    Amount : {{$help->prettyAmount}}<br>
-                                    Date Created : {{$help->created_at->toFormattedDateString()}}<br>
-                                    Status : {{$help->status_text}}<br>
-                                </div>
-                                <div class="help-actions text-right">
-                                    @can('delete', $help)
-                                    <button title="Delete" class="btn btn btn-danger delete-help"><i class="fa fa-trash"></i></button>
-                                    @endcan
-                                    <button title="Detsils" data-toggle="tooltip" class="btn btn btn-info"><i class="fa fa-bars"></i></button>
-                                    
-                                </div>
-                            </div>
+                                @include(config('view.dashboard').'inc.help-card', ['help' => $help])
                             @endforeach
                         </div>
                     </div>
@@ -166,20 +126,27 @@ Dashboard
 @stop
 @section('page-script')
 <script type="text/javascript">
-jQuery(document).ready(function($) {
-var helpDelOpt = {
-onConfirm : function(e){
-console.log(this);
-},
-};
-$('.help-button').click(function(event) {
-event.preventDefault();
-window.location.href = $(this).data('url');
-});
-$('.delete-help').confirmation(helpDelOpt);
-});
+    jQuery(document).ready(function($) {
+        var helpDelOpt = {
+            onConfirm : function(e){
+                console.log(this);
+            },
+        };
+        $('.help-button').click(function(event) {
+            event.preventDefault();
+            window.location.href = $(this).data('url');
+        });
+        $('.delete-help').confirmation(helpDelOpt);
+        function updateExpiry(){
+            $('.expiry').text(function(){
+                return moment($(this).attr('datetime')).fromNow();
+            });
+        }
+        var exp = setInterval(updateExpiry,1000);
+    });
 </script>
 @stop
 @push('scripts')
-<script src="{{ asset('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js')}}" ></script>
+<script src="{{ asset('js/countdown.min.js') }}"></script>
 @endpush

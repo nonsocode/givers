@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Africa/Lagos',
 
     /*
     |--------------------------------------------------------------------------
@@ -171,6 +171,7 @@ return [
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         NotificationChannels\Twilio\TwilioProvider::class,
         NotificationChannels\Plivo\PlivoServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -231,7 +232,8 @@ return [
 
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
         'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
-        'Uuid' => Webpatser\Uuid\Uuid::class,
+        // 'Uuid' => Webpatser\Uuid\Uuid::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
     ],
 

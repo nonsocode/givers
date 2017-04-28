@@ -67,6 +67,6 @@ class ProvideHelpPolicy
      */
     public function delete(User $user, ProvideHelp $ph)
     {
-        return $ph->status == 1;
+        return $ph->status === 1;
     }
 }

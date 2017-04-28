@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Services\Matcher;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,12 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        // $schedule->command('queue:work --daemon')->everyMinute()->withoutOverlapping();
+        $schedule->call(function ()
+        {
+           $m = new Matcher;
+           $m->createPairings();
+        })->everyTenMinutes();
     }
 
     /**

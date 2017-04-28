@@ -17,8 +17,7 @@ class Pairing extends MoneyModel
 
     protected $idPrefix = 'TRN';
     protected $money = ['amount'];
-
-	
+	protected $dates = ['expiry'];
 	protected $fillable = ['ammount','expiry'];
     
 

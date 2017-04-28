@@ -43,7 +43,7 @@ class TicketsController extends Controller
         $tm = new TicketMessage(['message'=> $request->message]);
         $tm->user_id = \Auth::user()->id;
         $ticket->messages()->save($tm);
-        $ticket->status == 0 ? $ticket->update(['status'=>1]):null;
+        $ticket->status == 0 ? $ticket->update(['status'=>1]):$ticket->touch();
         if ($request->hasFile('pics')) {
             foreach ($request->pics as $pic) {
                 $urls[]['url'] = $pic->store('ticket-documents', 'public');

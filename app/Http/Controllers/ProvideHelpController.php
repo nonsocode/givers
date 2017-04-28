@@ -30,8 +30,11 @@ class ProvideHelpController extends Controller
             $user = \Auth::user();
             $user->phs()->save($ph);
             $ph->owner = $user;
-
-            return route(config('routes.prefix').'dashboard');
+            $alert = [
+                'type' => 'success',
+                'message' => 'Your request to provide help was successful',
+            ];
+            return redirect()->route(config('routes.prefix').'dashboard')->with('alert',$alert);
         }
     }
 

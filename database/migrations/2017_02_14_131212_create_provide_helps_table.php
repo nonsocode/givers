@@ -18,6 +18,7 @@ class CreateProvideHelpsTable extends Migration
             $table->bigInteger('user_id');
             $table->decimal('amount',10,2);
             $table->decimal('amount_paid',10,2)->default(0);
+            $table->decimal('amount_matched',10,2)->default(0);
             $table->decimal('current_worth',10,2)->default(0);
             $table->tinyInteger('status')->default(1);
             $table->datetime('unfreezes')->nullable();

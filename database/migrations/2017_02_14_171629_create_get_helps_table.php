@@ -18,6 +18,7 @@ class CreateGetHelpsTable extends Migration
             $table->bigInteger('user_id');
             $table->decimal('amount', 10, 2);
             $table->decimal('amount_gotten', 10, 2)->default(0);
+            $table->decimal('amount_matched', 10, 2)->default(0);
             $table->tinyInteger('status')->default(1);
             $table->softDeletes();
             $table->timestamps();
