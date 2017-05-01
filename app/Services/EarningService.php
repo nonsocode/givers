@@ -55,7 +55,7 @@ class EarningService
 		$e->current_amount = $earner->amount;
 		$e->growable = $options['growable'] ?? true;
 		$e->percentage = $options['percentage'] ?? 0;
-		$e->percentage = $options['frozen'] ?? false;
+		$e->frozen = $options['frozen'] ?? false;
 		$e->growth_end = $options['growth_end'] ?? Carbon::now()->addDays(30);
 		$e->releasable = $options['releasable'] ?? Carbon::now()->addDays(14);
 		$e->expiry = $options['expiry'] ?? Carbon::now()->addDays(37);
