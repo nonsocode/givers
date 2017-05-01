@@ -10,6 +10,7 @@ use App\ProvideHelp;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 /**
 * 
 */
@@ -138,5 +139,43 @@ class EarningService
 	{
 		$user = $this->user ?? Auth::user();
 		return $this->user->earnings;
+	}
+
+	public function growGrowableFunds()
+	{
+		$earnings  = Earning::growable()->notExpired()->get();
+		DB::beginTransaction();
+		try {
+			$earnings->each(function ($e,$key)
+			{
+				$e->current_amount += $e->initial_amount * $e->percentage/100;
+				$e->save();
+			});
+			DB::commit();
+			return true;
+		} catch (Exception $e) {
+			DB::rollBack();
+			return false;
+		}
+		return false;
+	}
+
+	public function shrinkGrowableFunds()
+	{
+		$earnings  = Earning::growable()->notExpired()->get();
+		DB::beginTransaction();
+		try {
+			$earnings->each(function ($e,$key)
+			{
+				$e->current_amount -= $e->initial_amount * $e->percentage/100;
+				$e->save();
+			});
+			DB::commit();
+			return true;
+		} catch (Exception $e) {
+			DB::rollBack();
+			return false;
+		}
+		return false;
 	}
 }

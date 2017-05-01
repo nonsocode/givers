@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Services\EarningService;
 use App\Services\Matcher;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -33,6 +34,11 @@ class Kernel extends ConsoleKernel
            $m = new Matcher;
            $m->createPairings();
         })->everyTenMinutes();
+
+        $schedule->call(function(){
+            $e = new EarningService;
+            $e->growGrowableFunds();
+        })->daily();
     }
 
     /**

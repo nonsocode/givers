@@ -43,6 +43,36 @@ class Earning extends MoneyModel
     	return $query->where('releasable','<=',Carbon::now())->where('expiry','>=',Carbon::now())->whereFrozen(false);
     }
 
+    public function scopeNotExpired($query)
+    {
+        return $query->where('expiry','>' , Carbon::now());
+    }
+
+    public function scopeExpired($query)
+    {
+        return $query->where('expiry','<', Carbon::now());
+    }
+
+    public function scopeGrowable($query)
+    {
+        return $query->whereGrowable(true)->where('growth_end','>',Carbon::now());
+    }
+
+    public function scopeNotGrowable($query)
+    {
+        return $query->whereGrowable(false)->orWhere('growth_end','<',Carbon::now());
+    }
+
+    public function scopeFrozen($query)
+    {
+        return $query->whereFrozen(true);
+    }
+
+    public function scopeNotFrozen($query)
+    {
+        return $query->whereFrozen(false);
+    }
+
     //////////////////////////
     // Accessors & Mutators //
     //////////////////////////
