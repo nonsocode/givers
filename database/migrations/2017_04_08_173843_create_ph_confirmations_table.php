@@ -14,7 +14,7 @@ class CreatePhConfirmationsTable extends Migration
     public function up()
     {
         Schema::create('ph_confirmations', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->bigInteger('provide_helps_id')->nullable();
             $table->bigInteger('pairing_id');
             $table->bigInteger('user_id');

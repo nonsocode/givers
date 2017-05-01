@@ -19,7 +19,7 @@ class CreateBankTables extends Migration
             $table->timestamps();
         });
         Schema::create('bank_accounts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->bigInteger('user_id');
             $table->bigInteger('bank_id');
             $table->string('name');

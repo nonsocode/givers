@@ -13,28 +13,24 @@ class ConfigSeeder extends Seeder
     public function run()
     {
         Config::create([
-            'name'=>  'ph_limit',
-            'value' => '500000'
-        ]);
-        Config::create([
             'name'=> 'ph_max',
-            'value' => '5',
+            'value' => '2000000'
         ]);
         Config::create([
-            'name'=>  'gh_limit',
-            'value' => '500000'
+            'name'=> 'ph_daily_growth',
+            'value' => '1.71'
+        ]);
+        Config::create([
+            'name'=>  'ph_limit',
+            'value' => '5',
         ]);
         Config::create([
             'name'=> 'gh_max',
+            'value' => '500000'
+        ]);
+        Config::create([
+            'name'=>  'gh_limit',
             'value' => '5',
-        ]);
-        Config::create([
-            'name'=> 'gh_weekday_expiry',
-            'value' => '172800',
-        ]);
-        Config::create([
-            'name'=> 'gh_weekend_expiry',
-            'value' => '259200',
         ]);
     }
 }

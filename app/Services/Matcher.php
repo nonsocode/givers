@@ -25,8 +25,8 @@ class Matcher
 
 	protected function setRecords()
 	{
-		$this->incompleteGhs = GetHelp::incomplete();
-		$this->incompletePhs = ProvideHelp::incomplete();
+		$this->incompleteGhs = GetHelp::incomplete()->get();
+		$this->incompletePhs = ProvideHelp::incomplete()->get();
 		$this->recordSet = true;
 	}
 

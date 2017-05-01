@@ -35,9 +35,9 @@
         </div>
         <div class="col-md-6 actions text-right">
             @if ($trans->pher_confirm)
-            <button data-href="{{$trans->pher_confirm}}" class="btn btn-xs btn-info">View Confirmation</button>
+                <button data-href="{{$trans->pher_confirm}}" class="btn btn-xs btn-info">View Confirmation</button>
             @endif
-            <button class="btn btn-xs btn-primary">Details</button>
+            <button class="btn btn-xs btn-primary view-transaction"  data-url='{{ route('transaction',[$trans->id]) }}'>Details</button>
         </div>
     </div>
 </div>

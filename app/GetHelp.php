@@ -55,7 +55,7 @@ class GetHelp extends MoneyModel
 
     public function getTypeAttribute()
     {
-        return 'provide-help';
+        return 'get-help';
     }
 
     ///////////////////
@@ -70,4 +70,23 @@ class GetHelp extends MoneyModel
     {
     	return $this->belongsTo(User::class,'user_id');
     }
+
+    public function earnings()
+    {
+        return $this->belongsToMany(Earning::class,'earning_get_help')->withPivot('amount');
+    }
+
+    ///////////
+    // Check //
+    ///////////
+
+    public function authOwner()
+    {
+        return $this->owner->id === \Auth::user()->id;
+    }
+
+    public function canBeDeleted(){
+        return $this->status === 1 && $this->authOwner();
+    }
+
 }

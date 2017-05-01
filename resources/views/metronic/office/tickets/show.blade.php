@@ -41,7 +41,7 @@
 								{{$ticket->documents->count()}}
 							</li>
 							<li class="list-group-item text-center">
-							<form action="{{ route('ticket.close',[$ticket->id]) }}" method="POST">
+							<form action="{{ route(config('routes.prefix').'ticket.close',[$ticket->id]) }}" method="POST">
 								{{csrf_field()}}
 								{{method_field("PATCH")}}
 								<button type="submit" class="btn btn-danger" {{$ticket->status == 2 ? "disabled":''}}>Close Ticket</button>
@@ -58,7 +58,7 @@
 					<ul class="list-group">
 						@forelse ($tickets->sortByDesc('created_at')->take(3) as $tick)
 							<li class="list-group-item">
-								<a href="{{ route('ticket.view',[$tick->id]) }}">
+								<a href="{{ route(config('routes.prefix').'ticket.view',[$tick->id]) }}">
 								{{$tick->title}} <span class="pull-right label label-{{$tick->status_text}}">{{$tick->status_text}}</span></a>
 							</li>
 						@empty

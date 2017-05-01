@@ -21,6 +21,8 @@
         <link href="{{ asset('assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
+        {{-- <link href="{{ asset('css/sweetalert.css') }}" rel="stylesheet" type="text/css" /> --}}
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
         <link href="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
@@ -137,13 +139,14 @@
         <!-- END PRE-FOOTER -->
         <!-- BEGIN INNER FOOTER -->
         <div class="page-footer">
-            <div class="container"> 2017 &copy; IndexBaseHub. Powered by Webtronet Solutions </div>
+            <div class="container"> 2017 &copy; IndexBaseHub. All rights reserved.</div>
         </div>
         <div class="scroll-to-top">
             <i class="icon-arrow-up"></i>
         </div>
         <!-- END INNER FOOTER -->
         <!-- END FOOTER -->
+        @stack('modals')
         <!--[if lt IE 9]>
 <script src="{{ asset('assets/global/plugins/respond.min.js') }}"></script>
 <script src="{{ asset('assets/global/plugins/excanvas.min.js') }}"></script> 
@@ -165,7 +168,11 @@
         <script src="{{ asset('assets/global/plugins/counterup/jquery.waypoints.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/counterup/jquery.counterup.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/fullcalendar/fullcalendar.min.js') }}" type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.4/sweetalert2.min.js"></script>
+        {{-- <script src="{{ asset('js/sweetalert.min.js') }}" type="text/javascript"></script> --}}
         <script type="text/javascript">
+        var IndexBaseHub = {};
+        IndexBaseHub.urlPrefix = '{{config("routes.prefixUrl")}}'
         jQuery(document).ready(function($) {
             $.ajaxSetup({
                 headers:{

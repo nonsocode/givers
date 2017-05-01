@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProvideHelpsTable extends Migration
+class CreateEarningGetHelpTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateProvideHelpsTable extends Migration
      */
     public function up()
     {
-        Schema::create('provide_helps', function (Blueprint $table) {
+        Schema::create('earning_get_help', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('earning_id');
+            $table->bigInteger('get_help_id');
             $table->decimal('amount',10,2);
-            $table->decimal('amount_matched',10,2)->default(0);
-            $table->tinyInteger('status')->default(1);
-            $table->softDeletes();
             $table->timestamps();
+            $table->unique(['earning_id','get_help_id']);
         });
-        DB::update("ALTER TABLE provide_helps AUTO_INCREMENT = 1000;");
-
     }
 
     /**
@@ -33,6 +30,6 @@ class CreateProvideHelpsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('provide_helps');
+        Schema::dropIfExists('earning_get_help');
     }
 }

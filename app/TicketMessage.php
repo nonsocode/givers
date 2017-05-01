@@ -13,6 +13,7 @@ class TicketMessage extends Model
     use SoftDeletes;
 
     protected $fillable = ['message'];
+    protected $touches = ['ticket'];
     protected $idPrefix = 'TKM';
     
 

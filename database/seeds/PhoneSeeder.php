@@ -18,12 +18,12 @@ class PhoneSeeder extends Seeder
 
         Phone::create([
         	'number'	=> '07012903451',
-        	'user_id'	=> $u1,
+        	'user_id'	=> 1000,
         	'primary'	=> true,
     	]);
         Phone::create([
         	'number'	=> '07048938283',
-        	'user_id'	=>	$u2,
+        	'user_id'	=>	1001,
         	'primary'	=>  true,
     	]);
     }

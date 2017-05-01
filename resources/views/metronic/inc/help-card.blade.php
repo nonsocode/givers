@@ -1,4 +1,4 @@
-                            <div class="help-box {{$help->type}}">
+                            <div id="{{$help->did}}" class="help-box {{$help->type}}">
                                 <h5 class="help-title">Request to provide help {{$help->did}}</h5>
                                 <div class="help-details">
                                     Participant : {{$user->name}}<br>
@@ -8,9 +8,9 @@
                                 </div>
                                 <div class="help-actions text-right">
                                     @can('delete', $help)
-                                    <button title="Delete" class="btn btn btn-danger delete-help"><i class="fa fa-trash"></i></button>
+                                    <button data-id="{{$help->id}}" data-did="{{$help->did}}" data-type={{$help->type}} data-title="Delete"  data-content="This might be dangerous" data-on-confirm="deleteHelp" class="btn btn btn-danger delete-help"><i class="fa fa-trash"></i></button>
                                     @endcan
-                                    <button title="Detsils" data-toggle="tooltip" class="btn btn btn-info"><i class="fa fa-bars"></i></button>
+                                    <button title="Details" data-toggle="tooltip" class="btn btn btn-info"><i class="fa fa-bars"></i></button>
                                     
                                 </div>
                             </div>

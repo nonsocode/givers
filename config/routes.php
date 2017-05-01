@@ -1,4 +1,5 @@
 <?php 
 return [
-	'prefix' => 'dashboard.'
+	'prefix' => 'dashboard.',
+	'prefixUrl' => 'dashboard2'
 ];

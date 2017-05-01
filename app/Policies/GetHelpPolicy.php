@@ -19,7 +19,7 @@ class GetHelpPolicy
      */
     public function view(User $user, GetHelp $gh)
     {
-        //
+        return true;   //
     }
 
     /**
@@ -55,6 +55,7 @@ class GetHelpPolicy
      */
     public function delete(User $user, GetHelp $gh)
     {
-        return $gh->status === 1;
+        return $gh->status === 1 && $gh->authOwner();
+        // return true;
     }
 }

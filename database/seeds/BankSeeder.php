@@ -44,7 +44,7 @@ class BankSeeder extends Seeder
             'name'    => 'Chinonso Chukwuogor Obiora',
             'number'  => '6172235393',
             'primary' => true,
-            'user_id' => $u1,
+            'user_id' => 1000,
             'bank_id' => 6,
         ]);
         BankAccount::create([
@@ -52,7 +52,7 @@ class BankSeeder extends Seeder
             'number'  => '0393944828',
             'primary' => true,
             'bank_id' => 3,
-            'user_id' => $u2,
+            'user_id' => 1001,
         ]);
     }
 }

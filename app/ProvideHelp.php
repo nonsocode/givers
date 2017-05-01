@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Earning;
 use App\MoneyModel;
 use App\Traits\LongID;
 use App\Traits\StatusCollections;
@@ -31,7 +32,7 @@ class ProvideHelp extends MoneyModel
 
     protected $idPrefix = 'PH';
 	protected $guarded = ['id'];
-    protected $money = ['amount','amount_paid','current_worth','amount_matched'];
+    protected $money = ['amount','amount_matched'];
     
     ///////////////////
     // Relationships //
@@ -45,6 +46,10 @@ class ProvideHelp extends MoneyModel
     	return $this->belongsTo(User::class,'user_id');
     }
 
+    public function earning()
+    {
+        return $this->morphOne(Earning::class,'earnable');
+    }
     ////////////
     // Scopes //
     ////////////
@@ -85,4 +90,14 @@ class ProvideHelp extends MoneyModel
     {
         return 'provide-help';
     }
+
+    public function authOwner()
+    {
+        return $this->owner->id === \Auth::user()->id;
+    }
+
+    public function canBeDeleted(){
+        return $this->status === 1 && $this->authOwner();
+    }
+
 }

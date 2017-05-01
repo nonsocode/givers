@@ -11,7 +11,7 @@
                     </a>
                 </li>
                 <li class="">
-                    <a href="javascript:;"> Earnings
+                    <a href="{{ route(config('view.dashboard').'earnings.index') }}"> Earnings
                         <span class="arrow"></span>
                     </a>
                 </li>

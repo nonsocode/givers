@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Config;
 use App\ProvideHelp;
+use App\Services\ProvideHelpService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProvideHelpController extends Controller
 {
@@ -12,24 +15,30 @@ class ProvideHelpController extends Controller
 		return view(config('view.dashboard').'office.provide.create');	
     }
 
+    public function delete(ProvideHelp $ph)
+    {
+        if (Auth::user()->can('delete',$ph)){
+            $phService = new ProvideHelpService;
+            if($phService->delete($ph)){
+                return response()->json(['status' => 'success'],200);
+            }
+        }
+        return response()->json(['status' => 'fail'],200);
+    }
+
     public function store(Request $request)
     {
-        $user = \Auth::user();
         $this->validate($request,[
             'amount'=> 'required|numeric'
         ]);
-        $amount = $request->amount;
-        $old_amount = $user->latestPhAmount();
-        if ($amount < $old_amount) {
-            return back()->with('fail',"You cannot provide help less than your previous amount. Please provide help of $old_amount or more");
+        $phService = new ProvideHelpService(Auth::user());
+
+        if (!$phService->amountSufficient($request->amount)) {
+            $lt = $phService->prettyLatestAmount();
+            return back()->with('fail',"You cannot provide help less than your previous amount. Please provide help of $lt or more");
         }
         else{
-            $ph = new ProvideHelp;
-            $ph->amount = $request->amount;
-            $ph->current_worth = $request->amount;
-            $user = \Auth::user();
-            $user->phs()->save($ph);
-            $ph->owner = $user;
+            $phService->create($request->amount,['percentage'=>Config::val('ph_daily_growth')]);
             $alert = [
                 'type' => 'success',
                 'message' => 'Your request to provide help was successful',

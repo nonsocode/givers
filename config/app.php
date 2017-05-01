@@ -171,7 +171,8 @@ return [
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         NotificationChannels\Twilio\TwilioProvider::class,
         NotificationChannels\Plivo\PlivoServiceProvider::class,
-        Zizaco\Entrust\EntrustServiceProvider::class,
+        // Askedio\SoftCascade\Providers\GenericServiceProvider::class,
+        
         /*
          * Application Service Providers...
          */
@@ -233,7 +234,6 @@ return [
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
         'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
         // 'Uuid' => Webpatser\Uuid\Uuid::class,
-        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
     ],
 

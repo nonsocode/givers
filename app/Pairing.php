@@ -7,6 +7,7 @@ use App\Traits\LongID;
 use App\Traits\UniqueId;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 // Statuses
 // 
@@ -34,5 +35,24 @@ class Pairing extends MoneyModel
 	}
 	public function giver(){
 		return $this->ph->owner;
+	}
+
+	public function getStatusTextAttribute()
+	{
+		if ($this->pher_confirm && $this->gher_confirm) {
+			return 'Transaction Complete';
+		}
+		elseif (!$this->pher_confirm && $this->gher_confirm) {
+			return 'Receiver Has confirmed receipt';
+		}
+		elseif ($this->pher_confirm && !$this->gher_confirm) {
+			return  'Giver Has confirmed payment';
+		}
+		elseif (Carbon::now()->gt($this->expiry)) {
+			return 'Transaction has Expired';
+		}
+		else{
+			return 'Pending';
+		}
 	}
 }
