@@ -55,7 +55,7 @@ class GetHelpPolicy
      */
     public function delete(User $user, GetHelp $gh)
     {
-        return $gh->status === 1 && $gh->authOwner();
+        return $gh->status == 1 && $gh->authOwner();
         // return true;
     }
 }
