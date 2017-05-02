@@ -9,7 +9,7 @@
 					<div class="box-body">
 						<p>In order to streamline support requests and better serve you, we utilize a support ticket system. Every support request is assigned a unique ticket number which you can use to track the progress and responses online. For your reference we provide complete archives and history of all your support requests.</p>
 						<hr>
-						<form action="{{ route('tickets.store') }}" enctype="multipart/form-data" method="POST" role="form">
+						<form action="{{ route(config('routes.prefix').'tickets.store') }}" enctype="multipart/form-data" method="POST" role="form">
 							{{csrf_field()}}
 							<div class="col-md-4">
 								<div class="form-group">

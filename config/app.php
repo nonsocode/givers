@@ -172,6 +172,7 @@ return [
         NotificationChannels\Twilio\TwilioProvider::class,
         NotificationChannels\Plivo\PlivoServiceProvider::class,
         // Askedio\SoftCascade\Providers\GenericServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
         
         /*
          * Application Service Providers...

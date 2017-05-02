@@ -4,7 +4,7 @@
     <section class="content">
         <div class="row">
             <div class="col-md-3">
-                <a href="{{ route(config('routes.prefix').'tickets.index') }}" class="btn btn-primary btn-block margin-bottom"><i  class="fa fa-plus"></i> Create New Ticket</a>
+                <a href="{{ route(config('routes.prefix').'tickets.create') }}" class="btn btn-primary btn-block margin-bottom"><i  class="fa fa-plus"></i> Create New Ticket</a>
                 <div class="portlet light">
                     <div >
                         <h4 class="portlet-title">
