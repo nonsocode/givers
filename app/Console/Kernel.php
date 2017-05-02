@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function(){
             $e = new EarningService;
             $e->growGrowableFunds();
-        })->daily();
+        })->cron('* * * * *');
     }
 
     /**
