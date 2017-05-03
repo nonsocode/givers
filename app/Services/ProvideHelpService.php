@@ -51,6 +51,7 @@ class ProvideHelpService
 		    	$this->createEarning($ph,[
 		    		'description' => '10% Registeration bonus',
 		    		'growable' => false,
+		    		'amount' => $ph->amount * 0.1,
 	    		]);
 		    }
 		    DB::commit();

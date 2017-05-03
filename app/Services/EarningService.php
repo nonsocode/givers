@@ -52,8 +52,8 @@ class EarningService
 	{
 		$e = new Earning;
 		$e->user_id =  $options['user_id'] ?? $earner->user_id ??$this->user->id ?? Auth::user()->id;
-		$e->initial_amount = $earner->amount;
-		$e->current_amount = $earner->amount;
+		$e->initial_amount = $options['amount'] ?? $earner->amount;
+		$e->current_amount = $options['amount'] ?? $earner->amount;
 		$e->growable = $options['growable'] ?? true;
 		$e->percentage = $options['percentage'] ?? 0;
 		$e->frozen = $options['frozen'] ?? false;
