@@ -2,7 +2,7 @@
     <div class="container">
         <!-- BEGIN LOGO -->
         <div class="page-logo">
-            <a href="index.html">
+            <a href="/">
                 <h3>IndexBase Hub</h3>
             </a>
         </div>

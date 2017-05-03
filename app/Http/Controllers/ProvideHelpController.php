@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Config;
+use App\Config as Conf;
 use App\ProvideHelp;
 use App\Services\ProvideHelpService;
 use Illuminate\Http\Request;
@@ -12,7 +12,8 @@ class ProvideHelpController extends Controller
 {
     public function create()
     {
-		return view(config('view.dashboard').'office.provide.create');	
+        $ps = new ProvideHelpService;
+		return view(config('view.dashboard').'office.provide.create',['min' => $ps->leastAcceptableAmount()]);	
     }
 
     public function delete(ProvideHelp $ph)
@@ -28,17 +29,20 @@ class ProvideHelpController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'amount'=> 'required|numeric'
-        ]);
         $phService = new ProvideHelpService(Auth::user());
+        $this->validate($request,[
+            'amount'=> 'required|numeric|min:'.$phService->leastAcceptableAmount(),
+        ]);
 
         if (!$phService->amountSufficient($request->amount)) {
             $lt = $phService->prettyLatestAmount();
             return back()->with('fail',"You cannot provide help less than your previous amount. Please provide help of $lt or more");
         }
+        elseif (Auth::user()->phs()->incomplete()->count() >= Conf::val('ph_limit')) {
+            return back()->with('fail',"You too many Incomplete Provide Help requests. Please wait till they are completed before attempting to create another one");
+        }
         else{
-            $phService->create($request->amount,['percentage'=>Config::val('ph_daily_growth')]);
+            $phService->create($request->amount,['percentage'=>Conf::val('ph_daily_growth')]);
             $alert = [
                 'type' => 'success',
                 'message' => 'Your request to provide help was successful',

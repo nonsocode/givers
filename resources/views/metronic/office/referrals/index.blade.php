@@ -11,7 +11,7 @@
 								Referrals
 							</div>
 						</div>
-						<div class="actions"><button class="btn btn-primary">Show referral link</button></div>
+						<div class="actions"><button id="referral-link" class="btn btn-primary">Show referral link</button></div>
 					</div>
 					<div class="portlet-body">
 						<div class="table-container" style="overflow-x: scroll;width: 100%;">
@@ -30,7 +30,7 @@
 										<td>{{$child->did}}</td>
 										<td>{{$child->name}}</td>
 										<td>{{$child->email}}</td>
-										<td>{{$child->primaryPhone->number}}</td>
+										<td>{{$child->phone->number}}</td>
 										<td>{{$child->statusText}}</td>
 										<td>{{$child->created_at->toFormattedDateString()}}</td>
 									</tr>
@@ -49,6 +49,10 @@
 <script type="text/javascript">
     jQuery(document).ready(function($) {
        $('#referrals-table').dataTable({});
+       $('#referral-link').click(function(event) {
+       	event.preventDefault();
+       	swal('Your Referral Link', '{{ route('referral.link',[Auth::user()->email]) }}','info')
+       });
     });
 </script>
 @stop
@@ -62,3 +66,5 @@
     <script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}"></script>
     <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
 @endpush
+
+

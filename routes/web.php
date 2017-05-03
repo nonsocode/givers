@@ -12,7 +12,9 @@
 */
 
 Route::get('/', 'PagesController@index');
+
 Auth::routes();
+Route::get('referral/{email}', 'Auth\RegisterController@referral')->name('referral.link')->middleware('guest');
 Route::get('user/activation/{token}', 'Auth\RegisterController@activateUser')->name('user.activate');
 Route::get('user/activation/resend/token', 'Auth\RegisterController@resendForm')->name('user.activate.resend');
 Route::post('user/activation/resend', 'Auth\RegisterController@resendToken')->name('resendToken');
@@ -65,7 +67,3 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
 });
 
 
-Route::group(['prefix'=>'json','middleware' =>['auth']],function(){
-	Route::resource('phs','JSON\ProvideHelpController');
-	Route::resource('ghs','JSON\GetHelpController');
-});

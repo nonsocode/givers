@@ -46,14 +46,18 @@ class ProvideHelp extends MoneyModel
     	return $this->belongsTo(User::class,'user_id');
     }
 
-    public function earning()
+    public function earnings()
     {
-        return $this->morphOne(Earning::class,'earnable');
+        return $this->morphMany(Earning::class,'earnable');
     }
+
     ////////////
     // Scopes //
     ////////////
-
+    public function scopeVeryFirst($q)
+    {
+        return $q->whereVeryFirst(true);
+    }
     //////////////////////////
     // Accessors & Mutators //
     //////////////////////////
@@ -91,6 +95,10 @@ class ProvideHelp extends MoneyModel
         return 'provide-help';
     }
 
+    ///////////
+    // Tests //
+    ///////////
+
     public function authOwner()
     {
         return $this->owner->id === \Auth::user()->id;
@@ -98,6 +106,11 @@ class ProvideHelp extends MoneyModel
 
     public function canBeDeleted(){
         return $this->status === 1 && $this->authOwner();
+    }
+
+    public function isVeryFirst()
+    {
+        return $this->very_first;
     }
 
 }

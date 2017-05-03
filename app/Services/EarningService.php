@@ -57,15 +57,21 @@ class EarningService
 		$e->growable = $options['growable'] ?? true;
 		$e->percentage = $options['percentage'] ?? 0;
 		$e->frozen = $options['frozen'] ?? false;
+		$e->description = $options['description'] ?? null;
 		$e->growth_end = $options['growth_end'] ?? Carbon::now()->addDays(30);
 		$e->releasable = $options['releasable'] ?? Carbon::now()->addDays(14);
 		$e->expiry = $options['expiry'] ?? Carbon::now()->addDays(37);
-		return $earner->earning()->save($e);
+		return $earner->earnings()->save($e);
 	}
 
-	public function deleteEarningFor($earnable)
+	public function deleteEarningsFor($earnable)
 	{
-		return $earnable->earning->delete();
+		if ($earnable instanceof ProvideHelp) {
+			return $earnable->earnings()->delete();
+		}
+		elseif ($earnable instanceof Bonus) {
+			return $earnable->earning()->delete();
+		}
 	}
 
 	public function cashableFunds($user = null, $pretty = true)

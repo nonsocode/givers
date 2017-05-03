@@ -11,7 +11,7 @@
 							<table id="earnings-table" class="table table-hover">
 								<thead>
 									<tr>
-										<th>ID</th>
+										<th>Description</th>
 										<th>Initial Amount</th>
 										<th>Current Worth</th>
 										<th>Amount Claimed</th>
@@ -26,7 +26,7 @@
 								<tbody>
 								@foreach ($earnings as $en)
 									<tr>
-										<td>{{$en->did}}</td>
+										<td>{{$en->description}}</td>
 										<td>{{$en->prettyInitialAmount}}</td>
 										<td>{{$en->prettyCurrentAmount}}</td>
 										<td>{{$en->prettyClaimedAmount}}</td>

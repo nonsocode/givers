@@ -37,12 +37,7 @@ trait AuthenticatesUsers
 
             return $this->sendLockoutResponse($request);
         }
-        if ($user = \App\User::where([$this->username() => $request->email])->first() ) {
-            if(!$user->activated) {
-                $request->session()->flash('fail','This account has not been activated. Please check your email for the activation link or click <a href="'.route('user.activate.resend').'">here</a> to resend the activation code');
-                return redirect()->back()->withInput($request->only('email'));
-            }
-        }
+
         if ($this->attemptLogin($request)) {
             return $this->sendLoginResponse($request);
         }
@@ -64,10 +59,8 @@ trait AuthenticatesUsers
     protected function validateLogin(Request $request)
     {
         $this->validate($request, [
-            $this->username() => 'required',
-            'password' => 'required',
-            // 'g-recaptcha-response' => 'required|recaptcha',
-
+            $this->username() => 'required|string',
+            'password' => 'required|string',
         ]);
     }
 

@@ -54,5 +54,12 @@ class BankSeeder extends Seeder
             'bank_id' => 3,
             'user_id' => 1001,
         ]);
+        BankAccount::create([
+            'name'    => 'Donald Eze',
+            'number'  => '4345990029',
+            'primary' => true,
+            'bank_id' => 4,
+            'user_id' => 1002,
+        ]);
     }
 }

@@ -18,6 +18,7 @@ class CreateEarningsTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('earnable_id');
             $table->string('earnable_type');
+            $table->string('description')->nullable();
             $table->decimal('initial_amount',10,2);
             $table->decimal('current_amount',10,2);
             $table->decimal('claimed_amount',10,2)->default(0);

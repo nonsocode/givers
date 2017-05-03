@@ -148,6 +148,10 @@ class User extends Authenticatable
     ////////////////////////////
     // Repositories and stuff //
     ////////////////////////////
+    public function routeNotificationForTwilio()
+    {
+        return $this->phone->number;
+    }
     public function outstandingGh(){
         return $this->ghs()->outstanding();
     }

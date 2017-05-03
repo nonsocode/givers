@@ -17,6 +17,10 @@ class ConfigSeeder extends Seeder
             'value' => '2000000'
         ]);
         Config::create([
+            'name'=> 'ph_min',
+            'value' => '5000'
+        ]);
+        Config::create([
             'name'=> 'ph_daily_growth',
             'value' => '1.71'
         ]);

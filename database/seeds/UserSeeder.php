@@ -36,5 +36,17 @@ class UserSeeder extends Seeder
         '_lft' => 0,
         '_rgt' => 0,
         ]);
+        User::create([
+        'first_name' => 'Donald',
+        'last_name' => 'Ezeba',
+        'email' => 'donzabar@gmail.com',
+        'parent_id' => 0,
+        'formalities' => true,
+        'activated' => true,
+        'password' => 'access',
+        'remember_token' => str_random(10),
+        '_lft' => 0,
+        '_rgt' => 0,
+        ]);
     }
 }

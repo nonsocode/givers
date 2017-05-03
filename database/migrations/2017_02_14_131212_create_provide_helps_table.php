@@ -19,6 +19,7 @@ class CreateProvideHelpsTable extends Migration
             $table->decimal('amount',10,2);
             $table->decimal('amount_matched',10,2)->default(0);
             $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('very_first')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

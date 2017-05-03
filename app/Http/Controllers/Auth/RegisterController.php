@@ -8,6 +8,7 @@ use App\Referral;
 use App\Traits\RegistersUsers;
 use App\User;
 use Illuminate\Database\Connection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -97,5 +98,13 @@ class RegisterController extends Controller
         else {
             return User::where('email','superadmin@givers.app')->first()->children()->create($data);
         }
+    }
+
+    public function referral(Request $r)
+    {
+        if (User::whereEmail($r->email)->count()) {
+            return redirect()->route('register')->withInput(['referrer' => $r->email]);
+        }
+        return redirect()->route('register');
     }
 }

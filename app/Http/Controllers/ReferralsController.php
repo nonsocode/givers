@@ -9,7 +9,7 @@ class ReferralsController extends Controller
 {
     public function index()
     {
-    	$children = Auth::user()->load('children.primaryPhone')->children;
+    	$children = Auth::user()->load('children.phone')->children;
     	return view(config('view.dashboard').'office.referrals.index',['children' => $children]);
     }
 }
