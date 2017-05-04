@@ -80,6 +80,13 @@ class ProvideHelpService
 		}
 		return $res;
 	}
+	public function deleteWithPenalty(ProvideHelp $ph)
+	{
+		if($this->$delete($ph))
+		{
+			$this->$user;
+		}
+	}
 
 	public function deleteEarnings(ProvideHelp $ph)
 	{

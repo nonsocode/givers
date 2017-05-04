@@ -20,7 +20,7 @@ class ProvideHelpController extends Controller
     {
         if (Auth::user()->can('delete',$ph)){
             $phService = new ProvideHelpService;
-            if($phService->delete($ph)){
+            if($phService->deleteWithPenalty($ph)){
                 return response()->json(['status' => 'success'],200);
             }
         }
