@@ -59,6 +59,24 @@ class Matcher
 		return $this->incompletePhs->where('status',self::UNMATCHED)->sortBy('created_at');
 	}
 
+	public function getIncompleteGhs()
+	{
+		$this->initRecords();
+		return $this->incompleteGhs->where('status','<',self::FULLY_MATCHED)->sortBy('created_at');
+	}
+
+	public function getIncompletePhs()
+	{
+		$this->initRecords();
+		return $this->incompletePhs->where('status','<',self::FULLY_MATCHED)->sortBy('created_at');
+	}
+
+	public function getUrgentPhs()
+	{
+		$this->initRecords();
+		return $this->incompletePhs->where('status',self::UNMATCHED)->where('urgent',true)->sortBy('created_at');
+	}
+
 	/**
 	 * Creates Pairings in the database
 	 * 
@@ -202,6 +220,35 @@ class Matcher
 	}
 
 	/**
+	 * Loop and match a collection of ProvideHelps with a GetHelp
+	 * @param  Illuminate\Support\Collection $phs A collection of Provide Helps
+	 * @param  App\GetHelp $gh  A GetHelp Model
+	 * @return void
+	 */
+	public function urgentLoopMatcher($phs, $gh)
+	{
+		foreach ($phs as $ph) {
+			if ($this->sameOwner($ph,$gh)) continue;
+			if ($this->hasBalance($ph)) { # if ph money is not comletely matched
+				$matchableAmount = $this->getMatchableAmount($ph,$gh);
+				$tenPercent = (10 * $ph->amount /100);
+				if ($matchableAmount >= $tenPercent) {#check if mathhable money is not 0
+					$pair =  $this->createPair($ph,$gh,$tenPercent);
+					$this->removeUrgency($ph);
+					$phs->shift();
+				}
+				if (!$phs->count() || !$this->hasBalance($gh) ) break;
+			}
+		}
+	}
+
+	public function removeUrgency($ph)
+	{
+		$ph->urgent = false;
+		return $ph->save();
+	}
+
+	/**
 	 * Check if ProvideHelp and GetHelp models have the same owner
 	 * 
 	 * @param  App\ProvideHelp $ph ProvideHelp Model
@@ -212,4 +259,28 @@ class Matcher
 	{
 		return $gh->owner->id  === $ph->owner->id;
 	}
+
+	public function createUrgentPairings()
+	{
+		$ghs = $this->shuffleIncompleteGhs();
+		$phs = $this->shuffleIncompletePhs()->where('urgent', true);
+
+		foreach ($ghs as $gh) {
+			DB::transaction(function () use($phs,$gh){
+				$this->urgentLoopMatcher($phs, $gh);
+			});
+			if (!$phs->count()) break;
+		}
+	}
+
+	public function shuffleIncompleteGhs()
+	{
+		return $this->getIncompleteGhs()->shuffle();
+	}
+
+	public function shuffleIncompletePhs()
+	{
+		return $this->getIncompletePhs()->shuffle();
+	}
+
 }

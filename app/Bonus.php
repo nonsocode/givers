@@ -13,4 +13,9 @@ class Bonus extends Model
         return $this->morphOne(Earning::class,'earnable');
     }
 
+    public function type()
+    {
+    	return $this->belongsTo(BonusType::class,'bonus_type_id','name');
+    }
+
 }

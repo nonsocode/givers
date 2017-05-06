@@ -32,18 +32,19 @@ class EarningService
 			return $this->createForBonus($earnable,$opts);
 		}
 		elseif ($earnable instanceof Bonus) {
-			$opts['frozen'] = true;
 			return $this->createForProvideHelp($earnable,$opts);
 		}
 	}
 
 	public function createForBonus($bonus, array $opts = [])
 	{
+		$opts['frozen'] = $opts['frozen'] ?? true;
 		return $this->create($bonus,$opts)	;
 	}
 
 	public function createForProvideHelp($ph, array $opts = [])
 	{
+		$opts['frozen'] = $opts['frozen'] ?? true;
 		$opts['percentage'] = $opts['percentage'] ?? (float) Conf::val('ph_daily_growth');
 		return $this->create($ph,$opts);
 	}
@@ -61,7 +62,17 @@ class EarningService
 		$e->growth_end = $options['growth_end'] ?? Carbon::now()->addDays(30);
 		$e->releasable = $options['releasable'] ?? Carbon::now()->addDays(14);
 		$e->expiry = $options['expiry'] ?? Carbon::now()->addDays(37);
-		return $earner->earnings()->save($e);
+		return $earner->{$this->earningRelation($earner)}()->save($e);
+	}
+
+	public function earningRelation($earner)
+	{
+		if ($earner instanceof ProvideHelp) {
+			return 'earnings';
+		}
+		elseif ($earner instanceof Bonus) {
+			return 'earning';
+		}
 	}
 
 	public function deleteEarningsFor($earnable)

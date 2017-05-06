@@ -22,6 +22,7 @@ class CreateBonusesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id');
             $table->integer('bonus_type_id')->nullable();
+            $table->string('description')->nullable();
             $table->decimal('amount',10,2);
             $table->timestamps();
         });

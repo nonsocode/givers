@@ -12,9 +12,9 @@ class GetHelpController extends Controller
 {
 	public function create()
 	{
-        $cashable = User::earnings()->availableForWithdrawal()->get();
+        $cashable = Auth::user()->earnings()->availableForWithdrawal()->get();
 		return view(config('view.dashboard').'office.get.create')
-            ->with()
+                ->with('cashables',$cashable);
         ;
 	}
     public function delete(GetHelp $gh)

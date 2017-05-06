@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
-use App\ProvideHelp;
 use App\Config as Conf;
+use App\ProvideHelp;
 use App\Services\EarningService;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +20,7 @@ class ProvideHelpService
 	{
 		$this->user = $user?:\Auth::user();
 	}
+
 	public function latestAmount($user=null)
 	{
 		$user = $user?: $this->user;
@@ -44,15 +46,16 @@ class ProvideHelpService
 		$user = $this->user ?? Auth::user();
 		DB::beginTransaction();
 		try {
-		    $ph = $user->phs()->create(['amount'=>$amount]);
+		    $ph = $user->phs()->create(['amount'=>$amount,'urgent' => $firstTime]);
 		    $opts['description'] = Conf::val('ph_daily_growth')."% Daily Earning for ($ph->did)";
 		    $this->createEarning($ph,$opts);
 		    if ($firstTime) {
 		    	$this->createEarning($ph,[
-		    		'description' => '10% Registeration bonus',
+		    		'description' => '5% Registeration bonus',
 		    		'growable' => false,
-		    		'amount' => $ph->amount * 0.1,
+		    		'amount' => $ph->amount * 0.05,
 	    		]);
+	    		$this->createReferralBonus($ph);
 		    }
 		    DB::commit();
 		} catch (Exception $e) {
@@ -109,6 +112,16 @@ class ProvideHelpService
 		$latestAmount = $this->latestAmount();
         $minConf = Conf::val('ph_min');
         return  $latestAmount > $minConf ? $latestAmount : $minConf;
+	}
+
+	public function createReferralBonus($ph)
+	{
+		return (new BonusService)->createReferralBonus($ph, 
+			[
+				'description' => '5% Referral Bonus for User '.$this->user->did,
+				'user' => $this->user->parent ?: User::find(1001),
+				'percentage' => 0,
+			]);
 	}
 }
 
