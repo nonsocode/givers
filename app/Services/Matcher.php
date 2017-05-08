@@ -209,6 +209,7 @@ class Matcher
 	{
 		foreach ($phs as $ph) {
 			if ($this->sameOwner($ph,$gh)) continue;
+			if ($ph->urgent) continue;
 			if ($this->hasBalance($ph)) { # if ph money is not comletely matched
 				$matchableAmount = $this->getMatchableAmount($ph,$gh);
 				if ($matchableAmount) {#check if mathhable money is not 0

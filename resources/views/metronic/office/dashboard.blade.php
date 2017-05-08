@@ -1,9 +1,11 @@
 @extends(config('view.dashboard').'layouts.app')
+
 @section('page-head')
-@component(config('view.dashboard').'comps.page-head')
-Dashboard
-@endcomponent
+    @component(config('view.dashboard').'comps.page-head')
+    Dashboard
+    @endcomponent
 @stop
+
 @section('content')
 <div class="container">
     <!-- BEGIN PAGE CONTENT INNER -->
@@ -166,29 +168,6 @@ Dashboard
             });
         }
 
-        // var helpDelOpt = {
-        //     onConfirm : function(e){
-        //         var button = $(this)
-        //         $.ajax({
-        //             url: location.origin+'/'+IndexBaseHub.urlPrefix+'/'+button.data('type')+'/'+button.data('id'),
-        //             type: 'DELETE',
-        //             dataType: 'json',
-        //             data: {_token:"{{csrf_token()}}"},
-        //         })
-        //         .done(function(r) {
-        //             if (r.status == 'success') {
-        //                 $('#'+button.data('did')).remove();
-        //                 swal('Success', 'You have deleted your request', 'success');
-        //             }
-        //             else{
-        //                 swal('Failed', 'The request was not deleted', 'error');
-        //             }
-        //         })
-        //         .fail(function() {
-        //             swal('Failed', 'The request was not deleted', 'error');
-        //         })
-        //     },
-        // };
         $('.help-button').click(function(event) {
             event.preventDefault();
             window.location.href = $(this).data('url');
@@ -205,7 +184,7 @@ Dashboard
             }).then(function () {
                 deleteHelp(that);
           });
-    });
+        });
 
         $('.transactions').on('click', '.view-transaction', function () {
             var button = $(this);
@@ -219,29 +198,33 @@ Dashboard
                 button.html('Details').prop('disabled', false);
             });
         });
-
         var exp = setInterval(updateExpiry,1000);
     });
 </script>
 @stop
 @push('scripts')
-<script src="{{ asset('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js')}}" ></script>
-<script src="{{ asset('js/countdown.min.js') }}"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('js/fileupload.js') }}"></script>
+    <script src="{{ asset('js/countdown.min.js') }}"></script>
 @endpush
 @push('modals')
-<div class="modal fade" id="transaction-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <div class="modal fade" id="transaction-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endpush
+
+@push('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/fileupload.css') }}">
 @endpush

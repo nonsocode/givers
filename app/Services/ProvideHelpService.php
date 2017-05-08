@@ -116,10 +116,11 @@ class ProvideHelpService
 
 	public function createReferralBonus($ph)
 	{
+		$user = $this->user->parent ?: User::find(1000);
 		return (new BonusService)->createReferralBonus($ph, 
 			[
 				'description' => '5% Referral Bonus for User '.$this->user->did,
-				'user' => $this->user->parent ?: User::find(1001),
+				'user' => $user,
 				'percentage' => 0,
 			]);
 	}

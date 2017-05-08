@@ -30,6 +30,7 @@ Route::group(['prefix' => config('dashboard.name'),'middleware'=>'auth'], functi
 
     Route::get('get-help/create', 'GetHelpController@create')->name('get-help.create');
     Route::delete('get-help/{gh}', 'GetHelpController@delete');
+    Route::post('get-help','GetHelpController@store')->name('get-help');
 
     Route::get('/earnings', "EarningsController@index")->name(config('view.dashboard').'earnings.index');
 
@@ -48,7 +49,7 @@ Route::group(['prefix' => config('dashboard.name'),'middleware'=>'auth'], functi
 	Route::get('/bonuses', "BonusController@index")->name(config('routes.prefix').'bonuses.index');
 
 	Route::get('transactions/{trn}', 'TransactionsController@show')->name('transaction');
-	Route::put('transactions/pher_confirm/{trn}', 'TransactionsController@pherConfirm')->name('transaction.pher_confirm');
+	Route::put('transactions/pop/{trn}', 'TransactionsController@pherConfirm')->name('transaction.pop.save');
 
 });
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {

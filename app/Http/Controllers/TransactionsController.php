@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Pairing;
 use App\Services\TransactionHandler as Transaction;
+use Illuminate\Http\Request;
 
 class TransactionsController extends Controller
 {
@@ -13,13 +13,13 @@ class TransactionsController extends Controller
     	$trn->load(
     		'gh.owner.phone',
     		'gh.owner.parent',
-    		'gh.owner.bankAccount.bank',
+    		'gh.bankAccount.bank',
     		'ph.owner.phone',
     		'ph.owner.parent'
 		);
     	return view(config('view.dashboard').'office.transactions.details')->with([
     		'transaction' => $trn,
-    		'ba' => $trn->gh->owner->bankAccount,
+    		'ba' => $trn->gh->bankAccount,
     		'giver' => $trn->ph->owner,
     		'receiver' => $trn->gh->owner
 		]);
@@ -30,5 +30,14 @@ class TransactionsController extends Controller
     	$trn = new Transaction($trn);
     	$trn->gherConfirm();
     	$trn->updateHelpRequests();
+    }
+
+    public function pherConfirm (Pairing $trn, Request $req)
+    {
+        $confirm = (new Transaction($trn))->savePOP($req);
+        return response()->json([
+            'url' => storage_asset($confirm->url),
+            'status' => true,
+        ],200);
     }
 }

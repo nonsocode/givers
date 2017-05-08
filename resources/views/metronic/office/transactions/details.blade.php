@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="note note-danger">
-                    <p> <span class="font-red-sunglo bold">ATTENTION!</span>&nbsp;<span class="font-red-sunglo">Make money transfer only to the bank details, which are specified in the order. IndexBaseHub will not be held responsible if transactions are done outside of the banking details shown here, ALL communication between participants should be done in the message box provided for record keeping purposes. BEWARE of scammers that might ask you to make payment to other bank account that is not on our system. CONFIRM order ONLY when you have received the money and it reflects in your bank account</span> </p>
+                    <p> <span class="font-red-sunglo bold">Warning</span>&nbsp;<span class="font-red-sunglo">Be sure to contact the receiver before making any transfer to avoid any issues that may arise</span> </p>
                 </div>
             </div>
             <div class="col-md-12 col-sm-12">
@@ -43,13 +43,18 @@
                             <div class="col-sm-5 name">Transaction Expiry</div>
                             <div class="col-sm-7 value">{{$transaction->expiry->toDateTimeString()}}</div>
                         </div>
-                        @if ($transaction->pher_confirm)
-                            <div class="row static-info">
-                                <div class="col-sm-5 name">Proof of patment</div>
-                                <div class="col-sm-7 value"><a target="_blank" href="{{$transation->pher_confirm}}" class="font-blue"><i class="fa fa-image"></i> Picture</a></div>
-                            </div>
+                        @if ($transaction->confirmation)
+                        <div class="row static-info">
+                            <div class="col-sm-5 name">Proof of payment</div>
+                            <div class="col-sm-7 value"><a target="_blank" href="{{storage_asset($transaction->confirmation->url)}}" class="font-blue"><i class="fa fa-image"></i> Picture</a></div>
+                        </div>
                         @endif
-                        @if ($receiver->id == Auth::user()->id && !$transaction->gher_confirm)
+                        @if ($receiver->id == Auth::user()->id)
+                            @if ($transaction->confirmation && $transaction->confirmation)
+                                @if (!$transaction->happiness)
+                                    
+                                @endif
+                            @endif
                             <div class="row static-info">
                                 <div class="col-xs-12">
                                     <div class="alert alert-info">
@@ -148,22 +153,51 @@
                 </div>
             </div>
         </div>
-    </div>
-    @if ($giver->id == Auth::user()->id)
-    <form class="form" id="proof" action="{{ route('transaction.pher_confirm',[$transaction->id]) }}" enctype="multipart/form-data" method="post">
-        {{csrf_field()}}
-        {{method_field('PUT')}}
-        <div class="col-sm-8">
-            <div class="form-group">
-                <label for="">{{!$transaction->pher_confirm?'Upload':'Update'}} 
-                Proof of payment</label>
-                <input type="file" name="prof_of_payment" class="form-control" id="" placeholder="Input field">
+        @if ($giver->id == Auth::user()->id)
+        <form class="form" id="proof" action="{{ route('transaction.pop.save',[$transaction->id]) }}" enctype="multipart/form-data" method="post">
+            {{csrf_field()}}
+            {{method_field('PUT')}}
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <span class="btn btn-success fileinput-button">
+                        <i class="fa fa-plus"></i>
+                        <label for="">{{!$transaction->pher_confirm?'Upload':'Update'}} Proof of payment</label>
+                        <input type="file" class="pop-input" name="proof_of_payment" class="" id="" placeholder="Input field">
+                    </span>
+                </div>
+                 <div id="progress" class="progress">
+                    <div class="progress-bar progress-bar-success"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
-    @endif
+        </form>
+        @elseif($receiver->id == Auth::user()->id)
+
+        @endif
+    </div>
 </div>
 </div>
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('.pop-input').fileupload({
+            url: $("#proof").attr('action'),
+            // method : 'put',
+            dataType: 'json',
+            done: function (e,data) {
+                var res = data.result;
+                swal('Success','You have uploaded your proof of payment.', 'success');
+            },
+            fail: function () {
+                console.log('failing woegully');
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+                );
+            }
+        })
+    });
+</script>

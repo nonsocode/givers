@@ -20,11 +20,11 @@ class GetHelpService
 		$this->user = $user ?? Auth::user();
 	}
 
-	public function create(array $options)
+	public function create(array $options, $bankAccountId)
 	{
 		$options = collect($options);
 		foreach ($options as $key => $value) {
-			if (!$this->ghable($key)) {
+			if (!$this->ghable($key,$value)) {
 				return false;
 			}
 		}
@@ -32,6 +32,7 @@ class GetHelpService
 		try {
 			$gh = new GetHelp;
 			$gh->amount = $options->sum();
+			$gh->account = $bankAccountId;
 			$this->user->ghs()->save($gh);
 			foreach ($options as $key => $value) {
 				$e = Earning::find($key);
@@ -65,9 +66,9 @@ class GetHelpService
 		// return false;
 	}
 
-	public function ghable($earning)
+	public function ghable($earning, $amount = null)
 	{
-		return (new EarningService)->ghable($earning);
+		return (new EarningService)->ghable($earning,$amount);
 	}
 
 	public function delete($gh)

@@ -30,6 +30,15 @@ class Pairing extends MoneyModel
 	{
 		return $this->belongsTo(ProvideHelp::class,'provide_help_id');
 	}
+	public function account()
+	{
+		return $this->belongsTo(BankAccount::class,'account');
+	}
+
+	public function confirmation()
+	{
+		return $this->hasOne(PairingConfirmation::class,'pairing_id');
+	}
 	public function receiver(){
 		return $this->gh->owner;
 	}
@@ -54,5 +63,9 @@ class Pairing extends MoneyModel
 		else{
 			return 'Pending';
 		}
+	}
+
+	public function getStatusAttribute()
+	{
 	}
 }

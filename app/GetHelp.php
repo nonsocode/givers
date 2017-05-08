@@ -76,6 +76,11 @@ class GetHelp extends MoneyModel
         return $this->belongsToMany(Earning::class,'earning_get_help')->withPivot('amount');
     }
 
+    public function bankAccount()
+    {
+        return $this->belongsTo(BankAccount::class, 'account');
+    }
+
     ///////////
     // Check //
     ///////////

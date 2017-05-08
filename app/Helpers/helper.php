@@ -6,3 +6,10 @@ if (!function_exists('is_number')) {
 		return is_int($v) || is_float($v);
 	}
 }
+
+if (!function_exists('storage_asset')) {
+	function storage_asset($uri)
+	{
+		return asset('storage/'.$uri);
+	}
+}

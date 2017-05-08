@@ -93,7 +93,7 @@ class EarningService
 		return $pretty ? number_format($cashable,2) : $cashable;
 	}
 
-	public function ghable($earning)
+	public function ghable($earning,$amount = null)
 	{
 		if (!($earning instanceof Earning)) {
 			$earning = Earning::find($earning);
@@ -101,6 +101,7 @@ class EarningService
 		$conds = [];
 		$conds[] = !$this->hasExpired($earning);
 		$conds[] = $this->isReleased($earning);
+		$conds[] = $amount <= $earning->available_amount;
 		$res = true;
 		foreach ($conds as $cond) {
 			$res &= $conds;

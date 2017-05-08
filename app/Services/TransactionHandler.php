@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Pairing;
+use App\PairingConfirmation;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class TransactionHandler 
 {
@@ -15,9 +18,27 @@ class TransactionHandler
 	 */
 	public function __construct(Pairing $pair)
 	{
-		$this->pair = pair;
+		$this->pair = $pair;
 	}
 
+	public function savePOP(Request $request)
+	{
+		$url = $request->file('proof_of_payment')->store('pop','public');
+		if (!$this->pair->confirmation)
+		{
+			$confirmation = new PairingConfirmation;
+			$confirmation->url = $url;
+			$confirmation->pher_stamp = Carbon::now();
+			$this->pair->confirmation()->save($confirmation);
+		}
+		else {
+			$confirmation = $this->pair->confirmation;
+			$confirmation->url = $url;
+			$confirmation->pher_stamp = Carbon::now();
+			$confirmation->save();
+		}
+		return $confirmation;
+	}
 	public function pherConfirm($url)
 	{
 		$this->pair->pher_confirm = $url;

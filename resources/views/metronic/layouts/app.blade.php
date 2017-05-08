@@ -38,10 +38,8 @@
         <link href="{{ asset('assets/layouts/layout3/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/layouts/layout3/css/themes/default.min.css') }}" rel="stylesheet" type="text/css" id="style_color" />
         <link href="{{ asset('assets/layouts/layout3/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
+        @stack('css')
         @yield('css')
-       <style type="text/css">
-            @stack('css')
-       </style>
         <link rel="stylesheet" type="text/css" href="{{mix('css/custom.css')}}">
 
         <!-- END THEME LAYOUT STYLES -->
@@ -153,6 +151,7 @@
 <![endif]-->
         <!-- BEGIN CORE PLUGINS -->
         <script src="{{ asset('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/jqueryui.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/js.cookie.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') }}" type="text/javascript"></script>

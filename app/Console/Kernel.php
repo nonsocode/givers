@@ -33,12 +33,17 @@ class Kernel extends ConsoleKernel
         {
            $m = new Matcher;
            $m->createPairings();
-        })->everyTenMinutes();
+        })->hourlyAt('23');
 
         $schedule->call(function(){
             $e = new EarningService;
             $e->growGrowableFunds();
         })->daily();
+
+        $schedule->call(function(){
+            $m = new Matcher;
+            $m->createUrgentPairings();
+        })->everyTenMinutes();
     }
 
     /**

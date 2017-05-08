@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePhConfirmationsTable extends Migration
+class CreateHappinessMediaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreatePhConfirmationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ph_confirmations', function (Blueprint $table) {
+        Schema::create('happiness_media', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('provide_helps_id')->nullable();
-            $table->bigInteger('pairing_id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('happiness_id');
+            $table->string('type');
             $table->string('url');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreatePhConfirmationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ph_confirmations');
+        Schema::dropIfExists('happiness_media');
     }
 }
