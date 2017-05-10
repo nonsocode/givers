@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
         {
            $m = new Matcher;
            $m->createPairings();
-        })->hourlyAt('23');
+        })->hourlyAt('30');
 
         $schedule->call(function(){
             $e = new EarningService;
@@ -43,7 +43,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function(){
             $m = new Matcher;
             $m->createUrgentPairings();
-        })->everyTenMinutes();
+        })->cron('*/15 * * * *');
     }
 
     /**
