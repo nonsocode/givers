@@ -43,25 +43,30 @@
                             <div class="col-sm-5 name">Transaction Expiry</div>
                             <div class="col-sm-7 value">{{$transaction->expiry->toDateTimeString()}}</div>
                         </div>
-                        @if ($transaction->confirmation)
-                        <div class="row static-info">
-                            <div class="col-sm-5 name">Proof of payment</div>
-                            <div class="col-sm-7 value"><a target="_blank" href="{{storage_asset($transaction->confirmation->url)}}" class="font-blue"><i class="fa fa-image"></i> Picture</a></div>
-                        </div>
-                        @endif
-                        @if ($receiver->id == Auth::user()->id)
-                            @if ($transaction->confirmation && $transaction->confirmation)
-                                @if (!$transaction->happiness)
-                                    
-                                @endif
+                        <div class="pop-area">
+                            @if ($transaction->confirmation)
+                            <div class="row static-info ">
+                                <div class="col-sm-5 name">Proof of payment</div>
+                                <div class="col-sm-7 value"><a target="_blank" href="{{storage_asset($transaction->confirmation->url)}}" class="font-blue"><i class="fa fa-image"></i> Picture</a></div>
+                            </div>
                             @endif
-                            <div class="row static-info">
-                                <div class="col-xs-12">
-                                    <div class="alert alert-info">
-                                        if you have received the complete payment of the amount stipulated, Please Click <a href="">Here</a> to confirm the transaction.
+                        </div>
+                        @if ($receiver->isLoggedIn())
+                            @if (!$transaction->happiness)
+                                <div class="row static-info">
+                                    <div class="well info">
+                                        If You have received the complete payment, Write a Letter of happiness to complete this transaction. Note that your letter of happiness must contain  at leat one valid paragraph stating your reason for happiness
+                                    </div>
+                                    <div class="col-sm-5 name">Letter of happiness</div>
+                                    <div class="col-sm-7">
+                                        <form id="loh-form" class="form" action="{{ route('transaction.happiness',$transaction->id) }}" method="post">
+                                            {{csrf_field()}}
+                                            <textarea name="letter_of_happiness" class="form-control mb-10" id="letter_of_happiness"></textarea>
+                                            <div class="text-right"><button class="btn btn-primary">Submit</button></div>
+                                        </form>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -153,26 +158,24 @@
                 </div>
             </div>
         </div>
-        @if ($giver->id == Auth::user()->id)
-        <form class="form" id="proof" action="{{ route('transaction.pop.save',[$transaction->id]) }}" enctype="multipart/form-data" method="post">
+        @if ($giver->isLoggedIn() && $transaction->doesntHavePOP())
+        <form class="form" id="proof" action="{{ route('transaction.pop',[$transaction->id]) }}" enctype="multipart/form-data" method="post">
             {{csrf_field()}}
             {{method_field('PUT')}}
             <div class="col-sm-6">
                 <div class="form-group">
                     <span class="btn btn-success fileinput-button">
                         <i class="fa fa-plus"></i>
-                        <label for="">{{!$transaction->pher_confirm?'Upload':'Update'}} Proof of payment</label>
+                        <label for="">{{!$transaction->hasPOP()?'Upload':'Update'}} Proof of payment</label>
                         <input type="file" class="pop-input" name="proof_of_payment" class="" id="" placeholder="Input field">
                     </span>
                 </div>
                  <div id="progress" class="progress">
                     <div class="progress-bar progress-bar-success"></div>
                 </div>
-
-                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
-        @elseif($receiver->id == Auth::user()->id)
+        @elseif($receiver->isLoggedIn())
 
         @endif
     </div>
@@ -187,6 +190,13 @@
             done: function (e,data) {
                 var res = data.result;
                 swal('Success','You have uploaded your proof of payment.', 'success');
+                $('form#proof').remove();
+                var popArea = 
+            `<div class="row static-info ">
+                <div class="col-sm-5 name">Proof of payment</div>
+                <div class="col-sm-7 value"><a target="_blank" href="${res.url}" class="font-blue"><i class="fa fa-image"></i> Picture</a></div>
+            </div>`;        
+                $('.pop-area').html(popArea);
             },
             fail: function () {
                 console.log('failing woegully');
@@ -199,5 +209,30 @@
                 );
             }
         })
+        $('#loh-form').submit(function(event) {
+            event.preventDefault();
+            $(this).find('button').prop('disabled', true);
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                dataType: 'json',
+                data: $(this).serialize(),
+            })
+            .done(function(r) {
+                if (r.status == 'success') {
+                    $('#transaction-modal').modal('hide');
+                    swal('Congrats', r.message, r.status);
+                    $('#trn'+r.trnid).remove();
+                }
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                $('#loh-form').find('button').prop('disabled', false);
+            });
+            
+        });
     });
 </script>

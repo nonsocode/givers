@@ -40,4 +40,16 @@ class TransactionsController extends Controller
             'status' => true,
         ],200);
     }
+
+    public function saveLoh(Pairing $trn,Request $req)
+    {
+        $handler  = new Transaction($trn);
+        if($handler->saveLetterOfHappiness($req)){
+            return response()->json([
+                'message' => 'This transaction is now complete',
+                'status' => 'success',
+                'trnid' => $trn->id,
+            ],200);
+        }
+    }
 }

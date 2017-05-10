@@ -1,5 +1,5 @@
 <?php 
 
 return[
-	'name' => "/dashboard2"
+	'name' => "/dashboard"
 ];

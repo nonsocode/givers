@@ -9,6 +9,7 @@ use App\Traits\UniqueId;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Kalnoy\Nestedset\NodeTrait;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -175,6 +176,9 @@ class User extends Authenticatable
         return $this->status ? false: true;
     }
 
-
+    public function isLoggedIn()
+    {
+        return Auth::check() && $this->id == Auth::user()->id;
+    }
 
 }

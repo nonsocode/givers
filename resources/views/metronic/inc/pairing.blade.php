@@ -1,4 +1,4 @@
-<div class="transaction {{Auth::user()->id == $trans->gh->owner->id ? 'receiving':'paying'}}">
+<div id="trn-{{$trans->id}}" class="transaction {{Auth::user()->id == $trans->gh->owner->id ? 'receiving':'paying'}}">
     <div class="row">
         <div class="col-md-12">
             <span class="trn-id">{{ $trans->did }}</span>

@@ -16,7 +16,7 @@ class CreatePairingConfirmationsTable extends Migration
         Schema::create('pairing_confirmations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('pairing_id');
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->dateTime('pher_stamp');
             $table->dateTime('fake')->nullable();
             $table->dateTime('gher_confirm')->nullable();

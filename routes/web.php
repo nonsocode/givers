@@ -49,22 +49,7 @@ Route::group(['prefix' => config('dashboard.name'),'middleware'=>'auth'], functi
 	Route::get('/bonuses', "BonusController@index")->name(config('routes.prefix').'bonuses.index');
 
 	Route::get('transactions/{trn}', 'TransactionsController@show')->name('transaction');
-	Route::put('transactions/pop/{trn}', 'TransactionsController@pherConfirm')->name('transaction.pop.save');
+	Route::put('transactions/{trn}/pop', 'TransactionsController@pherConfirm')->name('transaction.pop');
+	Route::post('transaction/{trn}/letter-of-happiness','TransactionsController@saveLoh')->name('transaction.happiness');
 
 });
-Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
-	Route::get('/', 'OfficeController@index')->name('dashboard');
-
-	// Route::get('tickets', function (){return view('office.tickets.index');});
-	// Route::get('support-tickets', 'TicketsController@index')->name('tickets');
-	// Route::get('support-tickets/create', 'TicketsController@create')->name('tickets.create');
-	// Route::post('support-tickets/store', 'TicketsController@store')->name('tickets.store');
-	// Route::get('support-tickets/{ticket}', 'TicketsController@show')->name('ticket.view');
-	// Route::patch('support-tickets/{ticket}', 'TicketsController@closeTicket')->name('ticket.close');
-	// Route::post('support-tickets/{ticket}/new-message', 'TicketsController@newTicketMessage')->name('newTicketMessage');
-
-	Route::get('profile', "ProfileController@index")->name('profile');
-	Route::get('bonuses', "BonusController@index")->name('bonuses.index');
-});
-
-

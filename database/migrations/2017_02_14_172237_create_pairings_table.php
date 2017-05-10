@@ -17,8 +17,6 @@ class CreatePairingsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('provide_help_id');
             $table->bigInteger('get_help_id');
-            $table->boolean('gher_confirm')->default(0);
-            $table->string('pher_confirm')->nullable();
             $table->decimal('amount',10,2);
             $table->datetime('expiry');
             $table->softDeletes();
