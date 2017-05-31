@@ -158,7 +158,7 @@
                 </div>
             </div>
         </div>
-        @if ($giver->isLoggedIn() && $transaction->doesntHavePOP())
+        @if ($transaction->hasntExpired() && $giver->isLoggedIn() && $transaction->doesntHavePOP())
         <form class="form" id="proof" action="{{ route('transaction.pop',[$transaction->id]) }}" enctype="multipart/form-data" method="post">
             {{csrf_field()}}
             {{method_field('PUT')}}

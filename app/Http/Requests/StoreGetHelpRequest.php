@@ -27,6 +27,7 @@ class StoreGetHelpRequest extends FormRequest
         return [
             'earnings' => 'bail|required',
             // 'earnings.*' => 'exists:earnings,id',
+            'g-recaptcha-response' => 'required|recaptcha',
             'bank_account' => 'exists:bank_accounts,id|required|bail',
         ];
     }

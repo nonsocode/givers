@@ -76,7 +76,7 @@ class GetHelpService
 		if ($this->deletable($gh)) {
 			DB::beginTransaction();
 			try {
-				(new EarningService)->deductClaimedAmount($gh);
+				(new EarningService)->deductClaimedAmounts($gh);
 				$res = $gh->delete();
 				DB::commit();
 				return $res;

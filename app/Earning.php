@@ -15,6 +15,10 @@ class Earning extends MoneyModel
     protected $idPrefix = 'ERN';
     protected $appends = ['status'];
     protected $money = ['initial_amount','current_amount','claimed_amount','available_amount','releasedate_amount'];
+    protected $casts =[
+        'claimed_amount'=>'float',
+        'current_amount'=>'float',
+    ];
 	///////////////////
 	// Relationships //
 	///////////////////
@@ -41,6 +45,11 @@ class Earning extends MoneyModel
     public function scopeAvailableForWithdrawal($query)
     {
     	return $query->where('releasable','<=',Carbon::now())->where('expiry','>=',Carbon::now())->whereFrozen(false);
+    }
+
+    public function scopeNotZero($query)
+    {
+        return $query->whereColumn('current_amount','>','claimed_amount');
     }
 
     public function scopeNotExpired($query)

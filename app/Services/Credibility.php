@@ -15,10 +15,9 @@ class Credibility
 	const FALSE_FAKE_POP = 30;
 	const CANCEL_PH = 25;
 	const UNPAID_PH = 50;
+
 	function __construct()
 	{
 		# code...
 	}
-
-
 }

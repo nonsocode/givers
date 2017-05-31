@@ -137,12 +137,13 @@ class EarningService
 		return false;
 	}
 
-	public function deductClaimedAmount($deductable, $earningId)
+	public function deductClaimedAmounts($deductable)
 	{
 		if ($deductable instanceof GetHelp) {
-			$earning = $deductable->earnings()->find($earningId);
-			$earning->claimed_amount += $earning->pivot->amount;
-			$earning->save();
+		    foreach ($deductable->earnings as $earning){
+                $earning->claimed_amount -= $earning->pivot->amount;
+                $earning->save();
+            }
 			return $earning;
 		}
 		return false;

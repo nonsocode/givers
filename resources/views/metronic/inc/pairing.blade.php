@@ -24,9 +24,9 @@
     </div>
     <div class="row actions mt-10">
         <div class="col-md-6">
-            @if ($trans->pher_confirm && $trans->gher_confirm)
+            @if ($trans->hasBeenAproved())
                 <div class="alert alert-success">This transaction has been completed</div>
-            @elseif($trans->expiry->lt(Carbon\Carbon::now()))
+            @elseif($trans->hasExpired())
                 <div class="alert alert-danger">This transaction was not completed</div>
             @else
                 <span>Expires :</span>

@@ -32,6 +32,7 @@ class ProvideHelpController extends Controller
         $phService = new ProvideHelpService(Auth::user());
         $this->validate($request,[
             'amount'=> 'required|numeric|min:'.$phService->leastAcceptableAmount(),
+            'g-recaptcha-response' => 'required|recaptcha',
         ]);
 
         if (!$phService->amountSufficient($request->amount)) {

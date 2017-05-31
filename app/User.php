@@ -178,7 +178,7 @@ class User extends Authenticatable
 
     public function isLoggedIn()
     {
-        return Auth::check() && $this->id == Auth::user()->id;
+        return Auth::check() && $this->id == Auth::user()->id; 
     }
 
 }

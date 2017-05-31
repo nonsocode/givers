@@ -125,7 +125,7 @@ class Pairing extends MoneyModel
 
 	public function doesntHavePOP()
 	{
-		return !$this->confirmation;
+		return !($this->hasPOP());
 	}
 	public function hasValidPOP()
 	{
@@ -137,8 +137,23 @@ class Pairing extends MoneyModel
 		return $this->confirmation && $this->confirmation->fake;
 	}
 
-	public function hasBeenApproved()
+	public function hasBeenAproved()
 	{
 		return $this->confirmation && $this->confirmation->gher_confirm;	
+	}
+
+	public function hasntBeenAproved()
+	{
+		return !($this->hasBeenAproved());
+	}
+
+	public function hasExpired()
+	{
+		return $this->expiry->lt(Carbon::now());
+	}
+
+	public function hasntExpired()
+	{
+		return !$this->hasExpired();
 	}
 }

@@ -30,45 +30,75 @@ class Matcher
 		$this->recordSet = true;
 	}
 
-	protected function initRecords(){
+	protected function initRecords()
+	{
 		if (!$this->recordSet) {
 			$this->setRecords();
 		}
 	}
 
-	public function getPartialGhs()
+    /**
+     * Get partially matched GHS
+     * @param null $limiter
+     * @return mixed
+     */
+    public function getPartialGhs($limiter = null)
 	{
+		$limiter = $limiter ?? Carbon::now();
 		$this->initRecords();
-		return $this->incompleteGhs->where('status',self::PARTIALLY_MATCHED)->sortBy('created_at');
+		return $this->incompleteGhs
+			->where('status',self::PARTIALLY_MATCHED)
+			->where('created_at' ,'<',$limiter)
+			->sortBy('created_at');
 	}
 
-	public function getPartialPhs()
+	public function getPartialPhs($limiter = null)
 	{
+		$limiter = $limiter ?? Carbon::now();
 		$this->initRecords();
-		return $this->incompletePhs->where('status',self::PARTIALLY_MATCHED)->sortBy('created_at');
+		return $this->incompletePhs
+			->where('status',self::PARTIALLY_MATCHED)
+			->where('created_at' ,'<',$limiter)
+			->sortBy('created_at');
 	}
-	public function getUnmatchedGhs()
+	public function getUnmatchedGhs($limiter = null)
 	{
+		$limiter = $limiter ?? Carbon::now();
 		$this->initRecords();
-		return $this->incompleteGhs->where('status',self::UNMATCHED)->sortBy('created_at');
-	}
-
-	public function getUnmatchedPhs()
-	{
-		$this->initRecords();
-		return $this->incompletePhs->where('status',self::UNMATCHED)->sortBy('created_at');
-	}
-
-	public function getIncompleteGhs()
-	{
-		$this->initRecords();
-		return $this->incompleteGhs->where('status','<',self::FULLY_MATCHED)->sortBy('created_at');
+		return $this->incompleteGhs
+			->where('status',self::UNMATCHED)
+			->where('created_at' ,'<',$limiter)
+			->sortBy('created_at');
 	}
 
-	public function getIncompletePhs()
+	public function getUnmatchedPhs($limiter = null)
 	{
+		$limiter = $limiter ?? Carbon::now();
 		$this->initRecords();
-		return $this->incompletePhs->where('status','<',self::FULLY_MATCHED)->sortBy('created_at');
+		return $this->incompletePhs
+			->where('status',self::UNMATCHED)
+			->where('created_at' ,'<',$limiter)
+			->sortBy('created_at');
+	}
+
+	public function getIncompleteGhs($limiter = null)
+	{
+		$limiter = $limiter ?? Carbon::now();
+		$this->initRecords();
+		return $this->incompleteGhs
+			->where('status','<',self::FULLY_MATCHED)
+			->where('created_at' ,'<',$limiter)
+			->sortBy('created_at');
+	}
+
+	public function getIncompletePhs($limiter = null)
+	{
+		$limiter = $limiter ?? Carbon::now();
+		$this->initRecords();
+		return $this->incompletePhs
+			->where('status','<',self::FULLY_MATCHED)
+			->where('created_at' ,'<',$limiter)
+			->sortBy('created_at');
 	}
 
 	public function getUrgentPhs()
@@ -79,15 +109,19 @@ class Matcher
 
 	/**
 	 * Creates Pairings in the database
+	 * @param Carbon|String $beforeDatePh	The latest date of phs
+	 * @param Carbon|String $beforeDateGh	The latest date of ghs
 	 * 
 	 * @return void 
 	 */
-	public function createPairings()
+	public function createPairings($beforeDatePh = null, $beforeDateGh = null)
 	{
-		$pghs = $this->getPartialGhs();
-		$pphs = $this->getPartialPhs();
-		$ughs = $this->getUnmatchedGhs();
-		$uphs = $this->getUnmatchedPhs();
+		$beforeDateGh = $beforeDateGh ?? Carbon::now();
+		$beforeDatePh = $beforeDatePh ?? Carbon::now();
+		$pghs = $this->getPartialGhs($beforeDateGh);
+		$pphs = $this->getPartialPhs($beforeDatePh);
+		$ughs = $this->getUnmatchedGhs($beforeDateGh);
+		$uphs = $this->getUnmatchedPhs($beforeDatePh);
 
 		foreach ($pghs as $pgh) {
 			DB::transaction(function () use($pphs,$uphs,$pgh){

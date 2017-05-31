@@ -13,8 +13,10 @@ class GetHelpController extends Controller
 {
 	public function create()
 	{
+        Auth::login();
         $bankAccounts = Auth::user()->bankAccounts()->with('bank')->get();
-        $cashable = Auth::user()->earnings()->availableForWithdrawal()->get();
+        $cashable = Auth::user()->earnings()->availableForWithdrawal()->notZero()->get();
+        // dd($cashable->toJson());
 		return view(config('view.dashboard').'office.get.create')
                 ->with('cashables',$cashable)
                 ->with('bankAccounts',$bankAccounts);

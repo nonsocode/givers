@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Services\EarningService;
 use App\Services\Matcher;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -32,7 +33,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function ()
         {
            $m = new Matcher;
-           $m->createPairings();
+           $m->createPairings(new Carbon('3 days ago'), new Carbon('4 days ago'));
         })->hourlyAt('30');
 
         $schedule->call(function(){

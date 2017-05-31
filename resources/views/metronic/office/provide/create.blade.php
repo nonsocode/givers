@@ -34,9 +34,14 @@
 										<input type="number" name='amount' value="{{old('amount')}}" step="1000" min="{{$min}}" class="form-control" id="" placeholder="Input field">
 									</div>
 								</div>
-							
-								
-							
+		                        <div class="form-group text-center">
+		                            <div class="g-recaptcha" style="display:inline-block;" data-sitekey="{{env('GOOGLE_CAPTCHA_CLIENT')}}"></div>
+		                            @if ($errors->has('cpatcha'))
+		                                <span class="help-block">
+		                                    <strong>{{ $errors->first('captcha') }}</strong>
+		                                </span>
+		                            @endif
+		                        </div>
 								<button type="submit" class="btn btn-primary">Submit</button>
 							</form>
 						</div>

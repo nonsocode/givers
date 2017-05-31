@@ -9,7 +9,7 @@
 						<div class="caption-subject bold">Create Get Help Request</div>
 					</div></div>
 					<div class="portlet-body">
-						@forelse ($cashables as $cashable)
+						@if ($cashables->count())
 							<form action="{{ route('get-help') }}" method="POST" class="get-help-form">
 							{{csrf_field()}}
 								<div class="row mb-20">
@@ -55,6 +55,15 @@
 											<div class="well well-lg">
 												Please note that the maximum amount you can withdraw is NGN 2,000,000.
 											</div>
+					                        <div class="form-group text-center">
+					                            <div class="g-recaptcha" style="display:inline-block;" data-sitekey="{{env('GOOGLE_CAPTCHA_CLIENT')}}"></div>
+					                            @if ($errors->has('cpatcha'))
+					                                <span class="help-block">
+					                                    <strong>{{ $errors->first('captcha') }}</strong>
+					                                </span>
+					                            @endif
+					                        </div>
+
 										</div>
 										<div class="col-md-12">
 											<button type="submit" class="btn btn-primary">Submit</button>
@@ -62,12 +71,12 @@
 									</div>
 								</div>
 							</form>
-						@empty
+						@else
 							<div class="well well-lg">
 								<p>You do not have any funds available for withdrawal yet.</p>
 								<p>View your <a href="{{ route(config('view.dashboard').'earnings.index') }}">Earnings</a> page to see when your next earning will be available or <a href="{{ route('provide-help.create') }}">Provide help</a> to create Earnings</p>
 							</div>
-						@endforelse
+						@endif
 					</div>
 				</div>
 			</div>
@@ -92,6 +101,10 @@
 @push('scripts')
 	<script type="text/javascript" src="{{ asset('js/icheck.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('assets/global/plugins/nouislider/nouislider.min.js') }}"></script>
+@endpush
+
+@push('scripts')
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 @endpush
 
 @section('page-script')
