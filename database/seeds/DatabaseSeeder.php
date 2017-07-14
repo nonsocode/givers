@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call('PhoneSeeder');
         $this->call('SupportCategory');
         $this->call('Ticket');
+        $this->call('ProvideHelpSeeder');
+        $this->call('EarningSeeder');
 
         Model::reguard();
     }

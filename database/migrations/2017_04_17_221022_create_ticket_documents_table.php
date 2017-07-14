@@ -14,8 +14,8 @@ class CreateTicketDocumentsTable extends Migration
     public function up()
     {
         Schema::create('ticket_documents', function (Blueprint $table) {
-            $table->increments('id');
-            $table->uuid('ticket_message_id');
+            $table->bigIncrements('id');
+            $table->bigInteger('ticket_message_id');
             $table->string('url');
             $table->timestamps();
         });

@@ -11,7 +11,7 @@ class BonusController extends Controller
     {
     	$data['headerText'] = 'Bonuses';
     	$data['bonuses'] = \Auth::user()->bonuses;
-    	return view('office.bonuses.index',$data);
+    	return view(config('view.dashboard').'office.bonuses.index',$data);
     }
 
 }

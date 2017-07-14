@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\LongID;
 use App\Traits\UniqueId;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,10 +18,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
-    use UniqueId;
+    use LongID;
     use SoftDeletes;
 
-    public $incrementing = false;
+    protected $idPrefix = 'TCK';
+    
     protected $fillable =['title','priority','status'];
 
     ////////////////////////////
@@ -57,7 +59,7 @@ class Ticket extends Model
 
     public function messages()
     {
-    	return $this->hasMany(TicketMessage::class);
+    	return $this->hasMany(TicketMessage::class,'ticket_id');
     }
 
     public function owner()

@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->bigIncrements('id');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
@@ -25,13 +25,15 @@ class CreateUsersTable extends Migration
             $table->integer('login_count')->default(0);
             $table->tinyInteger('status')->default(1);
             $table->tinyInteger('formalities')->default(0);
-            $table->unsignedInteger('_lft');
-            $table->unsignedInteger('_rgt');
-            $table->uuid('parent_id')->nullable();
+            $table->unsignedBigInteger('_lft');
+            $table->unsignedBigInteger('_rgt');
+            $table->bigInteger('parent_id')->nullable();
+            $table->bigInteger('guider_id')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
         });
+        DB::update("ALTER TABLE users AUTO_INCREMENT = 1000;");
     }
 
     /**

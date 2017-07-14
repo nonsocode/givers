@@ -14,9 +14,9 @@ class CreateTicketMessagesTable extends Migration
     public function up()
     {
         Schema::create('ticket_messages', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('user_id');
-            $table->uuid('ticket_id');
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id');
+            $table->bigInteger('ticket_id');
             $table->text('message');
             $table->tinyInteger('stars')->default(0);
             $table->softDeletes();

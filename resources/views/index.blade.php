@@ -56,7 +56,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="index.php">
+                <a class="navbar-brand" href="/">
                     <img src="img/indexbasehub-logo.png" alt="" width="200" />
                 </a>
             </div>
@@ -70,7 +70,7 @@
 				<li><a href="#testimonals">Testimonals</a></li>
 				<li><a href="#credibility">Credibility Score</a></li>
 				<li><a href="#faqs">FAQs</a></li>
-				<li><a href="{{ route('register') }}" class="btn btn-skin btn-sm">Register/Login</a></li>
+				<li><a href="{{ route('login') }}" class="btn btn-skin btn-sm">Register/Login</a></li>
 			  </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -98,14 +98,14 @@
 									<li><span class="fa fa-check fa-2x icon-success"></span> <span class="list"><strong>Best reliable and strong platform</strong><br />We've got your back covered. No Fear, No Loss!</span></li>
 								</ul>
 								<p class="text-right wow bounceIn" data-wow-delay="0.4s">
-									<a href="#" class="btn btn-skin btn-lg">Create an account <i class="fa fa-angle-right"></i></a>
+									<a href="{{route('register')}}" class="btn btn-skin btn-lg">Create an account <i class="fa fa-angle-right"></i></a>
 								</p>
 							</div>
 						</div>
 					</div>
 					<div class="col-lg-6">
 						<div class="wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.2s">
-						<img src="assets/img/give.png" class="img-responsive" alt="" />
+						<img src="{{asset('assets/img/give.png')}}" class="img-responsive" alt="" />
 						</div>
 					</div>					
 				</div>		

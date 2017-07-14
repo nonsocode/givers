@@ -5,9 +5,9 @@ namespace App\Traits;
 
 use App\Bank;
 use App\BankAccount;
+use App\Events\Registered;
 use App\Phone;
 use App\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,7 +50,8 @@ trait RegistersUsers
             $user = $this->create($request->all());
             $this->attachPhoneNumber($user, $request);
             $this->attachBankAccount($user, $request);
-            event(new Registered($user,$this->activator));
+            // event(new Registered($user,$this->activator));
+            $this->activator->sendActivationMail($user);
 
         // $this->guard()->login($user);
 

@@ -14,9 +14,6 @@ class BankSeeder extends Seeder
      */
     public function run()
     {
-        $u1 = User::first()->id;
-        $u2 = User::latest()->first()->id;
-
     	Bank::create(['name' => 'Access Bank']);
     	Bank::create(['name' => 'Citibank']);
     	Bank::create(['name' => 'Diamond Bank']);
@@ -41,18 +38,25 @@ class BankSeeder extends Seeder
     	Bank::create(['name' => 'Zenith Bank']);
 
         BankAccount::create([
-            'name'    => 'Chinonso Chukwuogor Obiora',
-            'number'  => '6172235393',
-            'primary' => true,
-            'user_id' => $u1,
-            'bank_id' => 6,
-        ]);
-        BankAccount::create([
             'name'    => 'Supper admin man',
             'number'  => '0393944828',
             'primary' => true,
             'bank_id' => 3,
-            'user_id' => $u2,
+            'user_id' => 1000,
+        ]);
+        BankAccount::create([
+            'name'    => 'Chinonso Chukwuogor Obiora',
+            'number'  => '6172235393',
+            'primary' => true,
+            'user_id' => 1001,
+            'bank_id' => 6,
+        ]);
+        BankAccount::create([
+            'name'    => 'Donald Eze',
+            'number'  => '4345990029',
+            'primary' => true,
+            'bank_id' => 4,
+            'user_id' => 1002,
         ]);
     }
 }
