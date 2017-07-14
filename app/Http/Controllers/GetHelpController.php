@@ -13,7 +13,6 @@ class GetHelpController extends Controller
 {
 	public function create()
 	{
-        Auth::login();
         $bankAccounts = Auth::user()->bankAccounts()->with('bank')->get();
         $cashable = Auth::user()->earnings()->availableForWithdrawal()->notZero()->get();
         // dd($cashable->toJson());
