@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\User;
-use App\GH;
+use App\GetHelp;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class GetHelpPolicy
@@ -11,19 +11,19 @@ class GetHelpPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the gH.
+     * Determine whether the user can view the GetHelp.
      *
      * @param  \App\User  $user
-     * @param  \App\GH  $gH
+     * @param  \App\GetHelp  $gh
      * @return mixed
      */
-    public function view(User $user, GH $gH)
+    public function view(User $user, GetHelp $gh)
     {
-        //
+        return true;   //
     }
 
     /**
-     * Determine whether the user can create gHs.
+     * Determine whether the user can create GetHelps.
      *
      * @param  \App\User  $user
      * @return mixed
@@ -35,26 +35,27 @@ class GetHelpPolicy
     }
 
     /**
-     * Determine whether the user can update the gH.
+     * Determine whether the user can update the GetHelp.
      *
      * @param  \App\User  $user
-     * @param  \App\GH  $gH
+     * @param  \App\GetHelp  $gh
      * @return mixed
      */
-    public function update(User $user, GH $gH)
+    public function update(User $user, GetHelp $gh)
     {
         //
     }
 
     /**
-     * Determine whether the user can delete the gH.
+     * Determine whether the user can delete the GetHelp.
      *
      * @param  \App\User  $user
-     * @param  \App\GH  $gH
+     * @param  \App\GetHelp  $gh
      * @return mixed
      */
-    public function delete(User $user, GH $gH)
+    public function delete(User $user, GetHelp $gh)
     {
-        //
+        return $gh->status == 1 && $gh->authOwner();
+        // return true;
     }
 }

@@ -2,27 +2,41 @@
 
 namespace App;
 
+use App\Earning;
+use App\MoneyModel;
+use App\Traits\LongID;
+use App\Traits\StatusCollections;
 use App\Traits\UniqueId;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
     /**
-     * status 0 -> Created
-     * status 1 -> Partially Mathched
-     * status 2 -> Fully Matched
-     * status 3 -> Fully Paid
+     * status 0 -> Canceled
+     * status 1 -> Created and Unmatched
+     * status 2 -> Partially Mathched
+     * status 3 -> Fully Matched
+     * status 4 -> Fully Paid
+     * status 5 -> Matured
      */
 
-class ProvideHelp extends Model
+class ProvideHelp extends MoneyModel
 {
 
-    use UniqueId;
+    use LongID;
     use SoftDeletes;
+    use StatusCollections;
 
-    public $incrementing = false;
-    
+    const COMPLETED = 4;
+    const FULLY_MATCHED = 3;
+    const PARTIALLY_MATCHED = 2;
+    const UNMATCHED = 1;
 
+    protected $idPrefix = 'PH';
 	protected $guarded = ['id'];
-    // protected $hidden = ['status'];
+    protected $money = ['amount','amount_matched'];
+    
+    ///////////////////
+    // Relationships //
+    ///////////////////
     public function pairings()
     {
         return $this->hasMany(Pairing::class);
@@ -31,16 +45,72 @@ class ProvideHelp extends Model
     {
     	return $this->belongsTo(User::class,'user_id');
     }
-    public function scopeOutstanding($query)
+
+    public function earnings()
     {
-    	return $query->where('status', '!=', 4);
+        return $this->morphMany(Earning::class,'earnable');
     }
-    public function scopeComplete($query)
+
+    ////////////
+    // Scopes //
+    ////////////
+    public function scopeVeryFirst($q)
     {
-    	return $query->where('status', '=', 4);
+        return $q->whereVeryFirst(true);
     }
-    public static function allOutstanding(){
-    	return static::where('status', '!=', 4)->get();
+    //////////////////////////
+    // Accessors & Mutators //
+    //////////////////////////
+
+    public function getStatusTextAttribute()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'Canceled';
+                break;
+            case 1:
+                return 'Unmatched';
+                break;
+            case 2:
+                return 'Partially Matched';
+                break;
+            case 3:
+                return 'Fully Matched';
+                break;
+            case 4:
+                return 'Fully Paid';
+                break;
+            case 5:
+                return 'Unfrozen';
+                break;
+            
+            default:
+                return 'Unknown';
+                break;
+        }
+    }
+
+    public function getTypeAttribute()
+    {
+        return 'provide-help';
+    }
+
+    ///////////
+    // Tests //
+    ///////////
+
+    public function authOwner()
+    {
+        return $this->owner->id === \Auth::user()->id;
+    }
+
+    public function canBeDeleted(){
+        return $this->status === 1 && $this->authOwner();
+    }
+
+    public function isVeryFirst()
+    {
+        return $this->very_first;
     }
 
 }

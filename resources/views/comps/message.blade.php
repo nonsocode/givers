@@ -7,7 +7,7 @@
 		<div class="user-meta">
 			<span class="username">{{$message->owner->name}}</span><br>
 			<span class="userrole">
-				Administrater
+				Administrator
 			</span>
 		</div>
 		<div class="date pull-right">
@@ -17,10 +17,6 @@
 	<div class="message-body">
 		<div class="message-content">
 			{{$slot}}
-		</div>
-		<div class="message-attachments">
-			<h5>Attachments</h5>
-
 		</div>
 	</div>
 </div>

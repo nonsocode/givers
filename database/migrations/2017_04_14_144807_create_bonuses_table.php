@@ -16,15 +16,14 @@ class CreateBonusesTable extends Migration
         Schema::create('bonus_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->decimal('percentage',3,2)->nullable();
         });
         Schema::create('bonuses', function (Blueprint $table) {
-            $table->increments('id');
-            $table->uuid('user_id');
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id');
             $table->integer('bonus_type_id')->nullable();
+            $table->string('description')->nullable();
             $table->decimal('amount',10,2);
-            $table->decimal('claimed',10,2)->default(0);
-            $table->datetime('unfreezes')->nullable();
-            $table->datetime('date_claimed')->nullabele();
             $table->timestamps();
         });
     }

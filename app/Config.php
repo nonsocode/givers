@@ -8,6 +8,7 @@ class Config extends Model
 {
     protected $fillable =['name','value'];
     protected $hidden = [];
+    protected static $attr=[];
 
     public function getRouteKeyName()
     {
@@ -19,6 +20,9 @@ class Config extends Model
     }
 
     static function val($v){
-    	return static::find($v)->value;
+        if (isset(static::$attr[$v]) && !is_null(static::$attr[$v])) {
+            return static::$attr[$v];
+        }
+    	return static::$attr[$v] =  static::find($v)->value ?? null;
     }
 }

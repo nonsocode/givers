@@ -14,15 +14,16 @@ class CreateTicketsTable extends Migration
     public function up()
     {
         Schema::create('tickets', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->bigIncrements('id');
             $table->integer('support_category_id');
-            $table->uuid('user_id');
+            $table->bigInteger('user_id');
             $table->string('title');
             $table->string('priority')->default('low');
             $table->tinyInteger('status')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
+        DB::update("ALTER TABLE tickets AUTO_INCREMENT = 1000;");
     }
 
     /**

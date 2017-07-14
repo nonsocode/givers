@@ -104,7 +104,7 @@
                         <div class="form-group{{ $errors->has('bank_account.number') ? ' has-error' : '' }}">
                             <label for="bank_account_number" class="col-md-4 control-label">Bank Account Number</label>
                             <div class="col-md-6">
-                                <input id="bank_account_number" name="bank_account[number]" type="text" minlength="10" maxlength="10" class="form-control" name="referrer" value="{{ old('bank_account.number')}}" >
+                                <input id="bank_account_number" name="bank_account[number]" type="text" minlength="10" maxlength="10" class="form-control"  value="{{ old('bank_account.number')}}" >
 
                                 @if ($errors->has('bank_account.number'))
                                     <span class="help-block">
@@ -130,7 +130,7 @@
                         <div class="form-group{{ $errors->has('referrer') ? ' has-error' : '' }}">
                             <label for="referrer" class="col-md-4 control-label">Referrer's Email Address</label>
                             <div class="col-md-6">
-                                <input id="referrer" type="email" class="form-control" name="referrer" value="{{ old('referrer') ? old('referrer') : $request->referrer}}" >
+                                <input id="referrer" type="email" class="form-control" name="referrer" value="{{ old('referrer') ?: $request->referrer}}" >
 
                                 @if ($errors->has('referrer'))
                                     <span class="help-block">
@@ -153,3 +153,4 @@
     </div>
 </div>
 @endsection
+

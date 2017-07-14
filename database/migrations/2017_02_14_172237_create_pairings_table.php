@@ -14,15 +14,15 @@ class CreatePairingsTable extends Migration
     public function up()
     {
         Schema::create('pairings', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('provide_help_id');
-            $table->uuid('get_help_id');
-            $table->boolean('gher_confirm')->default(0);
+            $table->bigIncrements('id');
+            $table->bigInteger('provide_help_id');
+            $table->bigInteger('get_help_id');
             $table->decimal('amount',10,2);
             $table->datetime('expiry');
             $table->softDeletes();
             $table->timestamps();
         });
+        DB::update("ALTER TABLE pairings AUTO_INCREMENT = 1000;");
     }
 
     /**

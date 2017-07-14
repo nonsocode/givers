@@ -19,12 +19,13 @@ class TicketsController extends Controller
     {
         $data['headerText']= 'Support Tickets';
         $data['tickets'] = \Auth::user()->load(['tickets.category'])->tickets;
-        return view('office.tickets.index2',$data);
+        return view(config('view.dashboard').'office.tickets.index',$data);
+        // return view('office.tickets.index2',$data);
     }
 
     public function create(){
         $categories = SupportCategory::all();
-    	return view('office.tickets.create',compact('categories'));
+    	return view(config('view.dashboard').'office.tickets.create',compact('categories'));
     }
 
     public function show(Ticket $ticket)
@@ -33,15 +34,22 @@ class TicketsController extends Controller
         $data['tickets'] = $ticket->owner->tickets;
         $data['headerText'] = "Ticket ".$ticket->tid;
         $data['ticket']=$ticket->load('messages.documents','messages.owner');
-        return view('office.tickets.show', $data);
+        return view(config('view.dashboard').'office.tickets.show', $data);
     }
 
     public function newTicketMessage(Ticket $ticket, Request $request)
     {
+        // dd($request->hasFile('pics'));
         $tm = new TicketMessage(['message'=> $request->message]);
         $tm->user_id = \Auth::user()->id;
         $ticket->messages()->save($tm);
-        $ticket->status == 0 ? $ticket->update(['status'=>1]):null;
+        $ticket->status == 0 ? $ticket->update(['status'=>1]):null;#$ticket->touch();
+        if ($request->hasFile('pics')) {
+            foreach ($request->pics as $pic) {
+                $urls[]['url'] = $pic->store('ticket-documents', 'public');
+            }
+            $tm->documents()->createMany($urls);
+        }
         return redirect()->back();
     }
 
@@ -61,7 +69,14 @@ class TicketsController extends Controller
         $tm = new TicketMessage($req->only(['message']));
         $tm->ticket_id = $ticket->id;
         \Auth::user()->ticketMessages()->save($tm);
-        return redirect()->route('tickets');
+        if ($req->hasFile('pics')) {
+            foreach ($req->pics as $pic) {
+                $urls[]['url'] = $pic->store('ticket-documents', 'public');
+            }
+            $tm->documents()->createMany($urls);
+        }
+        
+        return redirect()->route(config('routes.prefix').'ticket.view',[$ticket->id]);
 
     }
 }

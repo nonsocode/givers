@@ -8,6 +8,7 @@ use App\Referral;
 use App\Traits\RegistersUsers;
 use App\User;
 use Illuminate\Database\Connection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -62,7 +63,7 @@ class RegisterController extends Controller
             'referrer' => 'email|nullable|different:email|exists:users,email',
             'bank' => 'exists:banks,name',
             'bank_account.name' => 'required',
-            'bank_account.number' => 'required|numeric',
+            'bank_account.number' => 'required|numeric|unique:bank_accounts,number',
             ],[
             'email.unique' => "A user with this email already exists. You can login <a href='/login/?email={$data['email']}'>here</a>",
             'phone.min' =>'Phone number is too short',
@@ -97,5 +98,13 @@ class RegisterController extends Controller
         else {
             return User::where('email','superadmin@givers.app')->first()->children()->create($data);
         }
+    }
+
+    public function referral(Request $r)
+    {
+        if (User::whereEmail($r->email)->count()) {
+            return redirect()->route('register')->withInput(['referrer' => $r->email]);
+        }
+        return redirect()->route('register');
     }
 }

@@ -5,6 +5,9 @@
 
     RewriteEngine On
 
+    # RewriteCond %{HTTPS} !=on
+    # RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
@@ -17,4 +20,9 @@
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+# Use PHP70 as default
+AddHandler application/x-httpd-php70 .php
+<IfModule mod_suphp.c>
+    suPHP_ConfigPath /opt/php70/lib
 </IfModule>
